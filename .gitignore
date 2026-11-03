@@ -1,0 +1,175 @@
+# ==============================================================================
+# SELF. // Production Git Ignore Rules
+# Security, Environment, Runtime, Cache & Artifact Boundaries
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. CRITICAL SECURITY & CREDENTIALS (NEVER COMMIT)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+.env.txt
+*.env
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+*.asc
+id_rsa*
+*.id_rsa
+*.keystore
+*secret*
+*credential*
+*seed_phrase*
+*wallet_backup*
+
+# ------------------------------------------------------------------------------
+# 2. SENSITIVE PERSONAL & FINANCIAL RECORDS (Local Biohacking & Life OS Vault)
+# ------------------------------------------------------------------------------
+*.backup
+*.bak
+*.private.*
+*Personal*
+*Sensitive*
+*Confidential*
+
+# Self.career (Confidential IP, Patents, Tenant Records, Career Data)
+src/Self.career/*
+src/Self.career/**/*
+Self.career/*
+Self.career/**/*
+**/Self.career/*
+**/Self.career/**/*
+
+# Self.credit (Sensitive Financial Records, Bank Statements, Credit Reports)
+src/Self.credit/*
+src/Self.credit/**/*
+Self.credit/*
+Self.credit/**/*
+**/Self.credit/*
+**/Self.credit/**/*
+
+# Self.legal (Background Checks, Legal Filings, Identity & Court Records)
+src/Self.legal/*
+src/Self.legal/**/*
+Self.legal/*
+Self.legal/**/*
+**/Self.legal/*
+**/Self.legal/**/*
+
+# ------------------------------------------------------------------------------
+# 3. NODE.JS & MODERN FRONTEND
+# ------------------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+package-lock.json.backup
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vite/
+.turbo/
+.parcel-cache/
+.cache/
+
+# ------------------------------------------------------------------------------
+# 4. PYTHON ENGINE & COMPILERS
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+
+# Distribution / Packaging
+.eggs/
+develop-eggs/
+downloads/
+eggs/
+.installed.cfg
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing, Coverage & Linters
+.pytest_cache/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.hypothesis/
+
+# ------------------------------------------------------------------------------
+# 5. 3D GRAPHICS, HEAVY ENGINE ASSETS & LOCAL LOGS
+# ------------------------------------------------------------------------------
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*.stl.bak
+*.glb.bak
+*.obj.bak
+# Cache directory for extracted PDF text or rendered thumbnails
+.cache_ingest/
+.vector_store/
+
+# ------------------------------------------------------------------------------
+# 6. OPERATING SYSTEM & IDE ARTIFACTS
+# ------------------------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.sublime-project
+*.sublime-workspace

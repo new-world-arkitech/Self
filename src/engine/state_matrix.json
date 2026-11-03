@@ -1,0 +1,2073 @@
+{
+  "app": "Self",
+  "last_synced": "2026-11-03T02:43:02.969476+00:00",
+  "avatar_composite": {
+    "overall_level": 1,
+    "total_xp": 0,
+    "visual_layers": {
+      "armor_and_gear": "tier_1",
+      "material_shader_and_aura": "tier_1",
+      "neural_hud_and_glyphs": "tier_1",
+      "base_mesh_and_vitality": "tier_1"
+    }
+  },
+  "domains": {
+    "Self.career": {
+      "avatar_attribute": "armor_and_gear",
+      "tier": 1,
+      "earned_xp": 0,
+      "next_tier_xp": 500,
+      "max_available_xp": 310,
+      "document_count": 4,
+      "documents": [
+        {
+          "file_name": "Fear Patent Draft.pdf",
+          "title": "Fear Patent Draft",
+          "file_hash": "9b0970a6127223f4",
+          "pages": 3,
+          "pages_read": 0,
+          "word_count": 0,
+          "total_xp_available": 90,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "complete_doc",
+              "label": "Complete review & mastery of Fear Patent Draft",
+              "page": 3,
+              "xp_value": 45,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "Fear Profiler.pdf",
+          "title": "Fear Profiler",
+          "file_hash": "348c8cd1a58413ef",
+          "pages": 5,
+          "pages_read": 0,
+          "word_count": 0,
+          "total_xp_available": 150,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "complete_doc",
+              "label": "Complete review & mastery of Fear Profiler",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "Links.txt",
+          "title": "Links",
+          "file_hash": "382d60b291a7248d",
+          "file_type": "txt",
+          "pages": 1,
+          "pages_read": 0,
+          "word_count": 7,
+          "total_xp_available": 40,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "review_bd908db5",
+              "label": "Complete in-depth study and conceptual mastery of Links",
+              "xp_value": 25,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "tenantID.pdf",
+          "title": "Tenantid",
+          "file_hash": "4912cdfc0652ed82",
+          "pages": 1,
+          "pages_read": 0,
+          "word_count": 0,
+          "total_xp_available": 30,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "complete_doc",
+              "label": "Complete review & mastery of tenantID",
+              "page": 1,
+              "xp_value": 15,
+              "completed": false
+            }
+          ]
+        }
+      ]
+    },
+    "Self.credit": {
+      "avatar_attribute": "material_shader_and_aura",
+      "tier": 1,
+      "earned_xp": 0,
+      "next_tier_xp": 500,
+      "max_available_xp": 19310,
+      "document_count": 5,
+      "documents": [
+        {
+          "file_name": "Business-Checking-October-2026.pdf",
+          "title": "Business Checking October 2026",
+          "file_hash": "86e2f48181629078",
+          "pages": 3,
+          "pages_read": 0,
+          "word_count": 802,
+          "total_xp_available": 255,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "465ba263a8",
+              "label": "Your name and account number (XXXXXX-3016)",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "0a0483cccd",
+              "label": "Describe the error or transfer you are unsure about, and explain in detail why you believe this is an error or",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1ece23690e",
+              "label": "The dollar amount and date of the suspected error",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "Equifax.pdf",
+          "title": "Equifax",
+          "file_hash": "ea681d06d1eadc31",
+          "pages": 34,
+          "pages_read": 0,
+          "word_count": 6231,
+          "total_xp_available": 10015,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "6ddbe7c748",
+              "label": "Year of birth",
+              "page": 2,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "0a2089e583",
+              "label": "Company sold",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "f524105168",
+              "label": "Credit usage",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "10d6970c86",
+              "label": "Monthly payment",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "835ae8040b",
+              "label": "Past due amount",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "0261cd0217",
+              "label": "Highest balance",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "13ec1a186e",
+              "label": "Responsibility",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "86d5866e8c",
+              "label": "\ue926Payment history",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a09fd6dadf",
+              "label": "Data Unavailable",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "97ec64d5c3",
+              "label": "Company sold",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "fc5ad2cf62",
+              "label": "Past due amount",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "269fd9ab63",
+              "label": "Highest balance",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "2890ef141d",
+              "label": "Responsibility",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5d212f288b",
+              "label": "\ue926Payment history",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "de9d1d23cd",
+              "label": "Company sold",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "3d0edb6acd",
+              "label": "Credit usage",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "41748abb58",
+              "label": "Monthly payment",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "c9877b2c62",
+              "label": "Past due amount",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "041224a0a2",
+              "label": "Highest balance",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "38f9e7e965",
+              "label": "Responsibility",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "900476c5a2",
+              "label": "\ue926Payment history",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a9b6cbb2cf",
+              "label": "Data Unavailable",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "463fa6c8de",
+              "label": "Company sold",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "7d1b4e8481",
+              "label": "Credit usage",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "3cc21cab36",
+              "label": "Monthly payment",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8032ac86f9",
+              "label": "Past due amount",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "22055e251f",
+              "label": "Highest balance",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1eda56ff51",
+              "label": "Responsibility",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8029ba1082",
+              "label": "\ue926Payment history",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "02cf05c099",
+              "label": "Data Unavailable",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "602243ccb7",
+              "label": "Company sold",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "45ca1ac44d",
+              "label": "Responsibility",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "cc614fbff8",
+              "label": "\ue926Payment history",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "24ae08bc86",
+              "label": "Data Unavailable",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "860d595957",
+              "label": "Company sold",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "98cdf19a36",
+              "label": "Monthly payment",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a85a8a8f81",
+              "label": "Responsibility",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "e8b558175c",
+              "label": "\ue926Payment history",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8b4c0df10e",
+              "label": "Data Unavailable",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "73e7619442",
+              "label": "Company sold",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "c61e99143b",
+              "label": "Credit usage",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "bb51122c22",
+              "label": "Monthly payment",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "e3338b7f29",
+              "label": "Past due amount",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4338473918",
+              "label": "Highest balance",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "9f3a2cbc20",
+              "label": "Responsibility",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a30b8441ab",
+              "label": "\ue926Payment history",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "40a1014866",
+              "label": "Data Unavailable",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a64266cd95",
+              "label": "Company sold",
+              "page": 10,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "0d255be3d3",
+              "label": "\ue926Payment history",
+              "page": 10,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5af9d17b84",
+              "label": "Company sold",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "b1135af4c4",
+              "label": "Past due amount",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "2de5c44240",
+              "label": "Highest balance",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "097d637af0",
+              "label": "Responsibility",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a305a8ebff",
+              "label": "\ue926Payment history",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "df20fe6416",
+              "label": "Data Unavailable",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "d30cb3f027",
+              "label": "Company sold",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "82db1d1413",
+              "label": "Past due amount",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "ada3df4cbd",
+              "label": "Highest balance",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8f4847b098",
+              "label": "Responsibility",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "db87c48df8",
+              "label": "\ue926Payment history",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "f8e5d30727",
+              "label": "Data Unavailable",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "035e2729eb",
+              "label": "Company sold",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "6be0ce5e48",
+              "label": "Highest balance",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4f089f1db7",
+              "label": "Responsibility",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "ee92eebf2a",
+              "label": "\ue926Payment history",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "65682cfe93",
+              "label": "Data Unavailable",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "bdfd826783",
+              "label": "Company sold",
+              "page": 14,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a196d5c12d",
+              "label": "Past due amount",
+              "page": 14,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8779183508",
+              "label": "\ue926Payment history",
+              "page": 14,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "3469d688f9",
+              "label": "Data Unavailable",
+              "page": 14,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "bd90994787",
+              "label": "Company sold",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4f550f8f02",
+              "label": "Monthly payment",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "6bbdbf99ea",
+              "label": "Past due amount",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "767ceff9dc",
+              "label": "Highest balance",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "159974617e",
+              "label": "Responsibility",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "67fd47132c",
+              "label": "\ue926Payment history",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a2dc7b3c11",
+              "label": "Data Unavailable",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "f1f5d01f97",
+              "label": "Company sold",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "08cfb40672",
+              "label": "Monthly payment",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4f8fa070fd",
+              "label": "Past due amount",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8198d4636a",
+              "label": "Highest balance",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "b8c7c4e1c8",
+              "label": "Responsibility",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "144fd75a65",
+              "label": "\ue926Payment history",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4b81a04b78",
+              "label": "Data Unavailable",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "45b1d75f8f",
+              "label": "Company sold",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "44a513a041",
+              "label": "Past due amount",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "081c15e5ab",
+              "label": "Responsibility",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1c1bd34642",
+              "label": "\ue926Payment history",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "556be981df",
+              "label": "Data Unavailable",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "000f3410c4",
+              "label": "Company sold",
+              "page": 18,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1be4e45c81",
+              "label": "\ue926Payment history",
+              "page": 18,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "419628bc68",
+              "label": "Data Unavailable",
+              "page": 18,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "f4a0c2d5bf",
+              "label": "Company sold",
+              "page": 19,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5c1a0d5665",
+              "label": "Past due amount",
+              "page": 19,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "bac49e69bc",
+              "label": "Responsibility",
+              "page": 19,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "9b251f543c",
+              "label": "\ue926Payment history",
+              "page": 19,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "68be2f07d3",
+              "label": "Data Unavailable",
+              "page": 19,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "d07d1636aa",
+              "label": "Company sold",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "01562c4774",
+              "label": "Past due amount",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "cdcbe12df8",
+              "label": "Highest balance",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "07db4169ca",
+              "label": "Responsibility",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "44cab3f32f",
+              "label": "\ue926Payment history",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1c7a0af50b",
+              "label": "Data Unavailable",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "9b0d7c53e8",
+              "label": "Company sold",
+              "page": 21,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "d7e374fbf0",
+              "label": "Monthly payment",
+              "page": 21,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "b91f56f016",
+              "label": "Past due amount",
+              "page": 21,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "41fa8d521c",
+              "label": "Responsibility",
+              "page": 21,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "c19662a262",
+              "label": "\ue926Payment history",
+              "page": 21,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "52754d8b87",
+              "label": "Past due amount",
+              "page": 22,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "88e3f9d185",
+              "label": "Responsibility",
+              "page": 22,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4afe220308",
+              "label": "\ue926Payment history",
+              "page": 22,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a9e2f92bf8",
+              "label": "Past due amount",
+              "page": 23,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1d96a2d220",
+              "label": "Responsibility",
+              "page": 23,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "81c0f197a8",
+              "label": "\ue926Payment history",
+              "page": 23,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "e201d91baf",
+              "label": "Past due amount",
+              "page": 24,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "9f4ceaad9a",
+              "label": "Responsibility",
+              "page": 24,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "ec34a880a1",
+              "label": "\ue926Payment history",
+              "page": 24,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "882c001820",
+              "label": "Data Unavailable",
+              "page": 24,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5d7f276a66",
+              "label": "Past due amount",
+              "page": 25,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "fc3040601b",
+              "label": "Responsibility",
+              "page": 25,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "af486bded6",
+              "label": "\ue926Payment history",
+              "page": 25,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "35e49124f6",
+              "label": "Data Unavailable",
+              "page": 25,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "608716a792",
+              "label": "Past due amount",
+              "page": 26,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "f2cba6df68",
+              "label": "Responsibility",
+              "page": 26,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "081da95cc0",
+              "label": "\ue926Payment history",
+              "page": 26,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "82a92a0336",
+              "label": "Data Unavailable",
+              "page": 26,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "26960970ec",
+              "label": "Past due amount",
+              "page": 27,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "cd3dbdb2ce",
+              "label": "Responsibility",
+              "page": 27,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "059357883c",
+              "label": "\ue926Payment history",
+              "page": 27,
+              "xp_value": 75,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "Transition.pdf",
+          "title": "Transition",
+          "file_hash": "f67eff2431dde8f7",
+          "pages": 32,
+          "pages_read": 0,
+          "word_count": 5099,
+          "total_xp_available": 8120,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "6ddbe7c748",
+              "label": "Year of birth",
+              "page": 2,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "0a2089e583",
+              "label": "Company sold",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "f524105168",
+              "label": "Credit usage",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "10d6970c86",
+              "label": "Monthly payment",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "835ae8040b",
+              "label": "Past due amount",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "13ec1a186e",
+              "label": "Responsibility",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "86d5866e8c",
+              "label": "\ue926Payment history",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a09fd6dadf",
+              "label": "Data Unavailable",
+              "page": 3,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "97ec64d5c3",
+              "label": "Company sold",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "6936873761",
+              "label": "Credit usage",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5075f13de7",
+              "label": "Monthly payment",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "fc5ad2cf62",
+              "label": "Past due amount",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "2890ef141d",
+              "label": "Responsibility",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5d212f288b",
+              "label": "\ue926Payment history",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "581468830c",
+              "label": "Data Unavailable",
+              "page": 4,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "de9d1d23cd",
+              "label": "Company sold",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "c9877b2c62",
+              "label": "Past due amount",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "38f9e7e965",
+              "label": "Responsibility",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "900476c5a2",
+              "label": "\ue926Payment history",
+              "page": 5,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "463fa6c8de",
+              "label": "Company sold",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "7d1b4e8481",
+              "label": "Credit usage",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "3cc21cab36",
+              "label": "Monthly payment",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8032ac86f9",
+              "label": "Past due amount",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1eda56ff51",
+              "label": "Responsibility",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8029ba1082",
+              "label": "\ue926Payment history",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "02cf05c099",
+              "label": "Data Unavailable",
+              "page": 6,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "602243ccb7",
+              "label": "Company sold",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "d70380120a",
+              "label": "Credit usage",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a83fc87cfd",
+              "label": "Monthly payment",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "c82d41e62b",
+              "label": "Past due amount",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "45ca1ac44d",
+              "label": "Responsibility",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "cc614fbff8",
+              "label": "\ue926Payment history",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "24ae08bc86",
+              "label": "Data Unavailable",
+              "page": 7,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "860d595957",
+              "label": "Company sold",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a85a8a8f81",
+              "label": "Responsibility",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "e8b558175c",
+              "label": "\ue926Payment history",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8b4c0df10e",
+              "label": "Data Unavailable",
+              "page": 8,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "73e7619442",
+              "label": "Company sold",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "c61e99143b",
+              "label": "Credit usage",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "bb51122c22",
+              "label": "Monthly payment",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "e3338b7f29",
+              "label": "Past due amount",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "9f3a2cbc20",
+              "label": "Responsibility",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a30b8441ab",
+              "label": "\ue926Payment history",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "40a1014866",
+              "label": "Data Unavailable",
+              "page": 9,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a64266cd95",
+              "label": "Company sold",
+              "page": 10,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "91d2c402de",
+              "label": "Past due amount",
+              "page": 10,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "192a9aa508",
+              "label": "Responsibility",
+              "page": 10,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "0d255be3d3",
+              "label": "\ue926Payment history",
+              "page": 10,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "61a0ba041e",
+              "label": "Data Unavailable",
+              "page": 10,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5af9d17b84",
+              "label": "Company sold",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "b1135af4c4",
+              "label": "Past due amount",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a305a8ebff",
+              "label": "\ue926Payment history",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "df20fe6416",
+              "label": "Data Unavailable",
+              "page": 11,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "d30cb3f027",
+              "label": "Company sold",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8f4847b098",
+              "label": "Responsibility",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "db87c48df8",
+              "label": "\ue926Payment history",
+              "page": 12,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "035e2729eb",
+              "label": "Company sold",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5da521d651",
+              "label": "Monthly payment",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4491da3b8a",
+              "label": "Past due amount",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4f089f1db7",
+              "label": "Responsibility",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "ee92eebf2a",
+              "label": "\ue926Payment history",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "65682cfe93",
+              "label": "Data Unavailable",
+              "page": 13,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "bdfd826783",
+              "label": "Company sold",
+              "page": 14,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a196d5c12d",
+              "label": "Past due amount",
+              "page": 14,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "8779183508",
+              "label": "\ue926Payment history",
+              "page": 14,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "3469d688f9",
+              "label": "Data Unavailable",
+              "page": 14,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "bd90994787",
+              "label": "Company sold",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "6bbdbf99ea",
+              "label": "Past due amount",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "67fd47132c",
+              "label": "\ue926Payment history",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a2dc7b3c11",
+              "label": "Data Unavailable",
+              "page": 15,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "f1f5d01f97",
+              "label": "Company sold",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4f8fa070fd",
+              "label": "Past due amount",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "144fd75a65",
+              "label": "\ue926Payment history",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4b81a04b78",
+              "label": "Data Unavailable",
+              "page": 16,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "45b1d75f8f",
+              "label": "Company sold",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "44a513a041",
+              "label": "Past due amount",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "081c15e5ab",
+              "label": "Responsibility",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1c1bd34642",
+              "label": "\ue926Payment history",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "556be981df",
+              "label": "Data Unavailable",
+              "page": 17,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "000f3410c4",
+              "label": "Company sold",
+              "page": 18,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "16c7eb1413",
+              "label": "Past due amount",
+              "page": 18,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "7b4e140dd7",
+              "label": "Responsibility",
+              "page": 18,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1be4e45c81",
+              "label": "\ue926Payment history",
+              "page": 18,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5c1a0d5665",
+              "label": "Past due amount",
+              "page": 19,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "bac49e69bc",
+              "label": "Responsibility",
+              "page": 19,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "9b251f543c",
+              "label": "\ue926Payment history",
+              "page": 19,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "01562c4774",
+              "label": "Past due amount",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "07db4169ca",
+              "label": "Responsibility",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "44cab3f32f",
+              "label": "\ue926Payment history",
+              "page": 20,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "b91f56f016",
+              "label": "Past due amount",
+              "page": 21,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "41fa8d521c",
+              "label": "Responsibility",
+              "page": 21,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "c19662a262",
+              "label": "\ue926Payment history",
+              "page": 21,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "52754d8b87",
+              "label": "Past due amount",
+              "page": 22,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "88e3f9d185",
+              "label": "Responsibility",
+              "page": 22,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "4afe220308",
+              "label": "\ue926Payment history",
+              "page": 22,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "a9e2f92bf8",
+              "label": "Past due amount",
+              "page": 23,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "1d96a2d220",
+              "label": "Responsibility",
+              "page": 23,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "81c0f197a8",
+              "label": "\ue926Payment history",
+              "page": 23,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "e201d91baf",
+              "label": "Past due amount",
+              "page": 24,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "9f4ceaad9a",
+              "label": "Responsibility",
+              "page": 24,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "ec34a880a1",
+              "label": "\ue926Payment history",
+              "page": 24,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "5d7f276a66",
+              "label": "Past due amount",
+              "page": 25,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "fc3040601b",
+              "label": "Responsibility",
+              "page": 25,
+              "xp_value": 75,
+              "completed": false
+            },
+            {
+              "id": "af486bded6",
+              "label": "\ue926Payment history",
+              "page": 25,
+              "xp_value": 75,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "cfpb_consumer-reporting-companies_list_2025.pdf",
+          "title": "Cfpb Consumer Reporting Companies List 2025",
+          "file_hash": "3f09baa6db7577fd",
+          "pages": 44,
+          "pages_read": 0,
+          "word_count": 8792,
+          "total_xp_available": 880,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "complete_doc",
+              "label": "Complete review & mastery of cfpb_consumer-reporting-companies_list_2025",
+              "page": 44,
+              "xp_value": 440,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "early warning.pdf",
+          "title": "Early Warning",
+          "file_hash": "516e39479f5bd0d3",
+          "pages": 2,
+          "pages_read": 0,
+          "word_count": 472,
+          "total_xp_available": 40,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "complete_doc",
+              "label": "Complete review & mastery of early warning",
+              "page": 2,
+              "xp_value": 20,
+              "completed": false
+            }
+          ]
+        }
+      ]
+    },
+    "Self.knowledge": {
+      "avatar_attribute": "neural_hud_and_glyphs",
+      "tier": 1,
+      "earned_xp": 0,
+      "next_tier_xp": 500,
+      "max_available_xp": 1112,
+      "document_count": 3,
+      "documents": [
+        {
+          "file_name": "BOTANICAL_SURVIVAL_AND_MEDICINE_GUIDE.md",
+          "title": "Botanical Survival And Medicine Guide",
+          "file_hash": "c0166885e68e6eff",
+          "file_type": "md",
+          "pages": 2,
+          "pages_read": 0,
+          "word_count": 912,
+          "total_xp_available": 322,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "98ddeaeefe",
+              "label": "Potatoes / Sweet Potatoes: High yield per square foot, rich in carbohydrates and Vitamin C. Easily propagated from eye sprouts.",
+              "xp_value": 32,
+              "completed": false
+            },
+            {
+              "id": "f884c7508b",
+              "label": "Beans (Bush & Pole): Essential for protein and soil nitrogen fixation. Easily dried for multi-year storage.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "258dc0eea9",
+              "label": "Winter Squash / Pumpkins: High yield, dense nutrients, and naturally stores for 3\u20136 months in a cool, dark room without refrigeration.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "a7a2fccf2b",
+              "label": "Natural Fertilizers: - Wood Ash: Provides Potassium (Potash) and raises acidic soil pH (use sparingly around acid-loving plants).",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "275e7f7172",
+              "label": "Crushed Eggshells: Slow-release Calcium to prevent blossom end rot in tomatoes and peppers.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "4a2dd481c5",
+              "label": "Compost Tea: Steep well-aged compost in water for 24\u201348 hours to create a nutrient-dense liquid soil drench.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "7f9eccc841",
+              "label": "Activated Charcoal (Hardwood Ash / Charcoal): - Properties: High-adsorption porous carbon.",
+              "xp_value": 40,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "Billionaire Mindsets.docx",
+          "title": "Billionaire Mindsets",
+          "file_hash": "2a1d92dd5a044a35",
+          "file_type": "docx",
+          "pages": 6,
+          "pages_read": 0,
+          "word_count": 2564,
+          "total_xp_available": 300,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "review_201cd392",
+              "label": "Complete in-depth study and conceptual mastery of Billionaire Mindsets",
+              "xp_value": 150,
+              "completed": false
+            }
+          ]
+        },
+        {
+          "file_name": "PRACTICAL_SURVIVAL_SCIENCE_AND_PHYSICAL_MASTERY_GUIDE.md",
+          "title": "Practical Survival Science And Physical Mastery Guide",
+          "file_hash": "e774128cb247cfe5",
+          "file_type": "md",
+          "pages": 2,
+          "pages_read": 0,
+          "word_count": 877,
+          "total_xp_available": 490,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "8aaf724ec3",
+              "label": "Phase 1: Inhale slowly through your nose for 4 seconds.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "0e89d01854",
+              "label": "Phase 2: Hold lungs full for 4 seconds.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "dae4608935",
+              "label": "Phase 3: Exhale smoothly through your mouth for 4 seconds.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "d3d64cdef3",
+              "label": "Phase 4: Hold lungs empty for 4 seconds.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "944b2d2bf4",
+              "label": "Ridgepole: Secure a sturdy 10\u201312 ft ridgepole log resting on a tree fork or Y-stake (4 ft high).",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "bd02b930e1",
+              "label": "Ribbing: Lean sturdy branches on a 45\u00b0 angle along both sides of the ridgepole to form an A-frame wedge.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "29d00d83d8",
+              "label": "Thermal Bedding: Pile at least 1 foot of dry leaves, pine needles, or grass inside the hut (prevents conductive heat loss to the cold ground).",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "2b6fb6f608",
+              "label": "Thatch: Layer leaves, pine boughs, and bark 2 to 3 feet thick over the outside frame to shed rain and trap body heat.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "50cc7d3f00",
+              "label": "Materials: 12V DC power adapter, plastic bucket, washing soda (Sodium Carbonate) + water, scrap steel anode.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "955b0cd68d",
+              "label": "Structure: Inverted 2-liter bottle with bottom cut off and cap perforated.",
+              "xp_value": 40,
+              "completed": false
+            },
+            {
+              "id": "eef9994340",
+              "label": "Layers (Top to Bottom): 1. Small Rocks / Gravel (Filters large debris/leaves).",
+              "xp_value": 40,
+              "completed": false
+            }
+          ]
+        }
+      ]
+    },
+    "Self.temple": {
+      "avatar_attribute": "base_mesh_and_vitality",
+      "tier": 1,
+      "earned_xp": 0,
+      "next_tier_xp": 500,
+      "max_available_xp": 45,
+      "document_count": 1,
+      "documents": [
+        {
+          "file_name": "90_day_evolution_plan.md",
+          "title": "90 Day Evolution Plan",
+          "file_hash": "af75408a2dd06d4e",
+          "file_type": "md",
+          "pages": 1,
+          "pages_read": 0,
+          "word_count": 620,
+          "total_xp_available": 45,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "review_c8fd7c20",
+              "label": "Complete in-depth study and conceptual mastery of 90_day_evolution_plan",
+              "xp_value": 25,
+              "completed": false
+            }
+          ]
+        }
+      ]
+    },
+    "Self.legal": {
+      "avatar_attribute": "base_mesh_and_vitality",
+      "tier": 1,
+      "earned_xp": 0,
+      "next_tier_xp": 500,
+      "max_available_xp": 360,
+      "document_count": 1,
+      "documents": [
+        {
+          "file_name": "Background report .pdf",
+          "title": "Background Report ",
+          "file_hash": "60e2df62b118390b",
+          "file_type": "pdf",
+          "pages": 18,
+          "pages_read": 0,
+          "word_count": 6149,
+          "total_xp_available": 360,
+          "earned_xp": 0,
+          "status": "UNSTARTED",
+          "milestones": [
+            {
+              "id": "review_741cb17a",
+              "label": "Complete in-depth study and conceptual mastery of Background report ",
+              "xp_value": 180,
+              "completed": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

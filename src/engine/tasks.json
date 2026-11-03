@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-11-02T23:36:07.506150+00:00",
+  "tasks": [
+    {
+      "id": "task_7da98076",
+      "title": "Review Toxic Plant Red Flags in Botanical Guide",
+      "domain": "Self.knowledge",
+      "xp_value": 50,
+      "status": "COMPLETED",
+      "priority": "MEDIUM",
+      "category": "CUSTOM",
+      "source_doc": null,
+      "notes": "",
+      "created_at": "2026-11-02T23:32:31.744443+00:00",
+      "completed_at": "2026-11-02T23:33:00.350990+00:00",
+      "abandoned_at": null,
+      "abandon_reason": null
+    },
+    {
+      "id": "task_61e125cf",
+      "title": "Perform 100 kettlebell swings and 50 pushups",
+      "domain": "Self.temple",
+      "xp_value": 60,
+      "status": "COMPLETED",
+      "priority": "MEDIUM",
+      "category": "CUSTOM",
+      "source_doc": null,
+      "notes": "",
+      "created_at": "2026-11-02T23:32:40.748861+00:00",
+      "completed_at": "2026-11-02T23:33:32.995935+00:00",
+      "abandoned_at": null,
+      "abandon_reason": null
+    },
+    {
+      "id": "task_a4ce33d1",
+      "title": "Identify 3 edible wild plants in local perimeter",
+      "domain": "Self.knowledge",
+      "xp_value": 50,
+      "status": "PENDING",
+      "priority": "MEDIUM",
+      "category": "CUSTOM",
+      "source_doc": null,
+      "notes": "",
+      "created_at": "2026-11-02T23:36:07.506142+00:00",
+      "completed_at": null,
+      "abandoned_at": null,
+      "abandon_reason": null
+    }
+  ]
+}
