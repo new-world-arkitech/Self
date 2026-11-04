@@ -33,6 +33,7 @@ from verification_engine import (
     get_cognitive_retention_summary
 )
 from psychometrics import compute_psychometrics
+from ai_document_analyzer import analyze_document_with_ai, scan_and_analyze_all_domains
 
 app = FastAPI(title="SELF. // Sovereign Life OS & Avatar Evolution Engine")
 
@@ -166,6 +167,16 @@ def add_journal_reflection(req: ReflectionCreateRequest):
         json.dump(ledger, f, indent=2)
 
     return {"success": True, "entry": entry}
+
+@app.post("/api/ai/scan-all")
+def trigger_ai_scan_all():
+    """Scans domain folders and extracts quizzes & missions with local Ollama model."""
+    results = scan_and_analyze_all_domains()
+    return {
+        "success": True,
+        "results": results,
+        "message": f"Processed {len(results)} document(s) with local AI."
+    }
 
 @app.get("/", response_class=HTMLResponse)
 def get_tasklist_dashboard():

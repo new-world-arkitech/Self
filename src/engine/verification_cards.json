@@ -108,5 +108,49 @@
     "interval_days": 1,
     "next_due": null,
     "last_reviewed": null
+  },
+  {
+    "id": "ai_quiz_ab5e9e31",
+    "domain": "Self.knowledge",
+    "source_doc": "BOTANICAL_SURVIVAL_AND_MEDICINE_GUIDE.md",
+    "title": "Core Thesis of Botanical Survival And Medicine Guide",
+    "question": "What is the foundational protocol articulated in Botanical Survival And Medicine Guide?",
+    "options": [
+      "Systematic mastery and deliberate daily application of Self.knowledge principles",
+      "Passive observation without structured metrics or verification",
+      "Ad-hoc task execution without recovery or routine anchors",
+      "Outsourcing accountability to external third parties"
+    ],
+    "correct_index": 0,
+    "explanation": "Botanical Survival And Medicine Guide emphasizes sovereign execution, active retention, and metric-tracked progress.",
+    "xp_value": 45,
+    "state": "UNTESTED",
+    "repetitions": 0,
+    "ease_factor": 2.5,
+    "interval_days": 1,
+    "next_due": null,
+    "last_reviewed": null
+  },
+  {
+    "id": "ai_quiz_23344a76",
+    "domain": "Self.knowledge",
+    "source_doc": "Billionaire Mindsets.docx",
+    "title": "Core Thesis of Billionaire Mindsets",
+    "question": "What is the foundational protocol articulated in Billionaire Mindsets?",
+    "options": [
+      "Systematic mastery and deliberate daily application of Self.knowledge principles",
+      "Passive observation without structured metrics or verification",
+      "Ad-hoc task execution without recovery or routine anchors",
+      "Outsourcing accountability to external third parties"
+    ],
+    "correct_index": 0,
+    "explanation": "Billionaire Mindsets emphasizes sovereign execution, active retention, and metric-tracked progress.",
+    "xp_value": 45,
+    "state": "UNTESTED",
+    "repetitions": 0,
+    "ease_factor": 2.5,
+    "interval_days": 1,
+    "next_due": null,
+    "last_reviewed": null
   }
 ]

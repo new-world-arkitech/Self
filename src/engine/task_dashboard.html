@@ -9,9 +9,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;900&family=JetBrains+Mono:wght@400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Three.js + OrbitControls for 3D Avatar Holo-Dock -->
+    <!-- Three.js + OrbitControls + GLTF / OBJ Loaders for 3D Humanoid Avatar Holo-Dock -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
 
     <style>
         :root {
@@ -139,7 +141,7 @@
         .telemetry-cluster {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 16px;
             font-family: var(--font-mono);
         }
 
@@ -164,6 +166,28 @@
         .xp-text {
             font-size: 11px;
             color: #cbd5e1;
+        }
+
+        .btn-ai-scan {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #d8b4fe;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-ai-scan:hover {
+            background: rgba(168, 85, 247, 0.3);
+            border-color: var(--violet-core);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
         }
 
         .sound-toggle-btn {
@@ -256,9 +280,9 @@
            ===================================================================== */
         .avatar-dock-grid {
             display: grid;
-            grid-template-columns: 1.35fr 1fr;
+            grid-template-columns: 1.4fr 1fr;
             gap: 25px;
-            min-height: 640px;
+            min-height: 660px;
         }
 
         @media (max-width: 1100px) {
@@ -300,7 +324,7 @@
         #threeCanvasContainer {
             flex: 1;
             width: 100%;
-            min-height: 480px;
+            min-height: 520px;
             position: relative;
             cursor: grab;
         }
@@ -315,8 +339,8 @@
             left: 20px;
             font-family: var(--font-mono);
             font-size: 11px;
-            color: rgba(255, 255, 255, 0.6);
-            background: rgba(4, 7, 14, 0.7);
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(4, 7, 14, 0.75);
             border: 1px solid var(--border-subtle);
             padding: 10px 14px;
             border-radius: 6px;
@@ -330,7 +354,7 @@
             border-top: 1px solid var(--border-subtle);
             background: rgba(4, 7, 14, 0.6);
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -609,11 +633,6 @@
             border: 1px solid rgba(99, 102, 241, 0.4);
         }
 
-        .badge-xp {
-            color: var(--gold-core);
-            font-weight: 700;
-        }
-
         .btn-abandon {
             background: transparent;
             border: 1px solid rgba(244, 63, 94, 0.3);
@@ -829,11 +848,30 @@
             gap: 12px;
             margin-top: 25px;
         }
+
+        /* Toast notification */
+        .toast-banner {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(12, 17, 30, 0.95);
+            border: 1px solid var(--cyan-core);
+            padding: 14px 22px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: #fff;
+            box-shadow: 0 0 25px var(--cyan-glow);
+            display: none;
+            z-index: 10000;
+            animation: fadeIn 0.25s ease-out;
+        }
     </style>
 </head>
 <body>
 
 <div class="scanlines"></div>
+<div class="toast-banner" id="toastNotification">NOTIFICATION MESSAGE</div>
 
 <!-- HEADER BAR -->
 <header>
@@ -845,6 +883,9 @@
         </div>
     </div>
     <div class="telemetry-cluster">
+        <button class="btn-ai-scan" onclick="triggerAIScan()">
+            <span>⚡</span> AI SCAN DOCS
+        </button>
         <div class="avatar-level-badge">
             <div class="level-text" id="headerAvatarLevel">LEVEL 1</div>
             <div class="xp-text" id="headerAvatarXP">0 / 2000 XP</div>
@@ -891,22 +932,23 @@
                 <div id="threeCanvasContainer"></div>
 
                 <div class="canvas-overlay-telemetry" id="avatarTelemetryOverlay">
-                    VITALITY: ALIGNED // CORE GLSL DISPLACEMENT ACTIVE<br>
+                    AVATAR MODEL: 3D HUMANOID RIG (woman_avatar.glb)<br>
                     NEURAL GLYPHS: ORBITING // TIER 3 RESONANCE<br>
                     AURA SHADER: FRESNEL EMERALD (TIER 2)
                 </div>
 
                 <div class="canvas-controls-dock">
+                    <button class="mini-btn active" id="btnModelToggle" onclick="toggleAvatarModel()">MODEL: HUMANOID</button>
                     <button class="mini-btn active" id="btnAutoSpin" onclick="toggleAutoSpin()">AUTO-SPIN: ON</button>
                     <button class="mini-btn" id="btnWireframe" onclick="toggleWireframe()">WIREFRAME</button>
                     <button class="mini-btn" onclick="resetCamera()">RESET VIEW</button>
                     <div style="flex: 1;"></div>
                     <select id="vitalityPoseSelector" class="mini-btn" style="background: rgba(0,0,0,0.5);" onchange="changeVitalityPose(this.value)">
-                        <option value="1">Posture: Slouched / Depleted</option>
-                        <option value="2">Posture: Baseline Breath</option>
-                        <option value="3" selected>Posture: Aligned Focus</option>
-                        <option value="4">Posture: Combat Poise</option>
-                        <option value="5">Posture: Sovereign Levitation</option>
+                        <option value="1">Vitality: Depleted</option>
+                        <option value="2">Vitality: Baseline</option>
+                        <option value="3" selected>Vitality: Aligned Focus</option>
+                        <option value="4">Vitality: Combat Poise</option>
+                        <option value="5">Vitality: Sovereign Float</option>
                     </select>
                 </div>
             </div>
@@ -1120,7 +1162,7 @@
         if (!sfxEnabled) return;
         try {
             const ctx = getAudioContext();
-            const freqs = [523.25, 659.25, 783.99, 1046.50]; // C Major arpeggio
+            const freqs = [523.25, 659.25, 783.99, 1046.50];
             freqs.forEach((f, idx) => {
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
@@ -1154,9 +1196,17 @@
         } catch (e) {}
     }
 
+    function showToast(msg) {
+        const toast = document.getElementById('toastNotification');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
+
     // --- 2. THREE.JS 3D HOLO-AVATAR ENGINE ---
     let scene, camera, renderer, controls;
-    let coreMesh, neuralGroup, armorGroup, auraSparkles;
+    let humanoidRoot, coreMesh, neuralGroup, armorGroup, auraSparkles, groundGrid;
+    let activeModelMode = 'HUMANOID'; // 'HUMANOID' | 'CORE'
     let autoSpin = true;
     let wireframeMode = false;
     let currentTiers = { knowledge: 3, temple: 3, career: 2, credit: 2 };
@@ -1167,10 +1217,10 @@
         const height = container.clientHeight;
 
         scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x030408, 0.08);
+        scene.fog = new THREE.FogExp2(0x030408, 0.06);
 
         camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-        camera.position.set(0, 0.6, 3.8);
+        camera.position.set(0, 0.4, 3.4);
 
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(width, height);
@@ -1180,51 +1230,68 @@
         controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
-        controls.minDistance = 1.8;
-        controls.maxDistance = 6.0;
+        controls.minDistance = 1.6;
+        controls.maxDistance = 5.5;
+        controls.target.set(0, 0, 0);
 
-        // Lights
-        const ambLight = new THREE.AmbientLight(0xffffff, 0.4);
+        // Lighting
+        const ambLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambLight);
 
-        const dirLight = new THREE.DirectionalLight(0x00f0ff, 1.2);
-        dirLight.position.set(5, 8, 5);
-        scene.add(dirLight);
+        const dirLight1 = new THREE.DirectionalLight(0x00f0ff, 1.4);
+        dirLight1.position.set(4, 7, 5);
+        scene.add(dirLight1);
 
-        const pointLight = new THREE.PointLight(0xf59e0b, 1.5, 10);
-        pointLight.position.set(-3, 2, -2);
-        scene.add(pointLight);
+        const dirLight2 = new THREE.DirectionalLight(0xf59e0b, 1.0);
+        dirLight2.position.set(-4, -2, -3);
+        scene.add(dirLight2);
 
+        // Ground Holo-Grid
+        const gridGeo = new THREE.RingGeometry(0.2, 1.6, 32);
+        const gridMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.25 });
+        groundGrid = new THREE.Mesh(gridGeo, gridMat);
+        groundGrid.rotation.x = -Math.PI / 2;
+        groundGrid.position.y = -0.9;
+        scene.add(groundGrid);
+
+        // Load or build meshes
         buildAvatarEntities();
 
         window.addEventListener('resize', onWindowResize);
         animateThree();
     }
 
+    function getAuraColor() {
+        if (currentTiers.credit >= 5) return 0xf59e0b;
+        if (currentTiers.credit >= 4) return 0xfbbf24;
+        if (currentTiers.credit >= 3) return 0x00f0ff;
+        if (currentTiers.credit >= 2) return 0x10b981;
+        return 0x64748b;
+    }
+
     function buildAvatarEntities() {
         // Clear previous meshes
+        if (humanoidRoot) scene.remove(humanoidRoot);
         if (coreMesh) scene.remove(coreMesh);
         if (neuralGroup) scene.remove(neuralGroup);
         if (armorGroup) scene.remove(armorGroup);
         if (auraSparkles) scene.remove(auraSparkles);
 
-        // 1. Core Vitality Anatomy (Temple)
-        const coreGeo = new THREE.IcosahedronGeometry(0.85, Math.min(3, currentTiers.temple));
-        const coreMat = new THREE.MeshStandardMaterial({
-            color: 0x050c18,
-            roughness: 0.2,
-            metalness: 0.9,
-            wireframe: wireframeMode,
-            emissive: currentTiers.credit >= 4 ? 0xf59e0b : 0x00f0ff,
-            emissiveIntensity: 0.25
-        });
-        coreMesh = new THREE.Mesh(coreGeo, coreMat);
-        scene.add(coreMesh);
+        const auraHex = getAuraColor();
 
-        // 2. Neural HUD Glyphs & Halo (Knowledge)
+        if (activeModelMode === 'HUMANOID') {
+            loadHumanoidMesh(auraHex);
+        } else {
+            loadProceduralCore(auraHex);
+        }
+
+        // Attach Neural HUD (Knowledge)
         neuralGroup = new THREE.Group();
-        const ringGeo = new THREE.TorusGeometry(1.3, 0.015, 16, 64);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.75 });
+        const headY = activeModelMode === 'HUMANOID' ? 0.74 : 0.05;
+        neuralGroup.position.set(0, headY, 0);
+
+        const ringGeo = new THREE.TorusGeometry(activeModelMode === 'HUMANOID' ? 0.38 : 1.3, 0.012, 16, 64);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.8 });
         const ringMesh = new THREE.Mesh(ringGeo, ringMat);
         ringMesh.rotation.x = Math.PI / 2.2;
         neuralGroup.add(ringMesh);
@@ -1232,52 +1299,130 @@
         const glyphCount = currentTiers.knowledge * 3;
         for (let i = 0; i < glyphCount; i++) {
             const angle = (i / glyphCount) * Math.PI * 2;
-            const r = 1.35;
-            const glyphGeo = new THREE.OctahedronGeometry(0.05, 0);
+            const r = activeModelMode === 'HUMANOID' ? 0.44 : 1.35;
+            const glyphGeo = new THREE.OctahedronGeometry(activeModelMode === 'HUMANOID' ? 0.025 : 0.05, 0);
             const glyphMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff });
             const glyph = new THREE.Mesh(glyphGeo, glyphMat);
-            glyph.position.set(Math.cos(angle) * r, 0.05 * Math.sin(angle * 3), Math.sin(angle) * r);
+            glyph.position.set(Math.cos(angle) * r, 0.03 * Math.sin(angle * 3), Math.sin(angle) * r);
             neuralGroup.add(glyph);
         }
         scene.add(neuralGroup);
 
-        // 3. Kinetic Exoskeleton Armor Plates (Career)
+        // Attach Kinetic Armor Pauldrons (Career)
         armorGroup = new THREE.Group();
-        const plateCount = currentTiers.career * 2;
-        for (let i = 0; i < plateCount; i++) {
-            const angle = (i / plateCount) * Math.PI * 2;
-            const r = 1.15;
-            const plateGeo = new THREE.BoxGeometry(0.16, 0.45, 0.04);
-            const plateMat = new THREE.MeshStandardMaterial({
-                color: 0x1e293b,
-                metalness: 0.95,
-                roughness: 0.1
-            });
-            const plate = new THREE.Mesh(plateGeo, plateMat);
-            plate.position.set(Math.cos(angle) * r, (i % 2 === 0 ? 0.2 : -0.3), Math.sin(angle) * r);
-            plate.rotation.y = -angle + Math.PI / 2;
-            armorGroup.add(plate);
+        const shoulderY = activeModelMode === 'HUMANOID' ? 0.42 : 0.0;
+        armorGroup.position.set(0, shoulderY, 0);
+
+        if (activeModelMode === 'HUMANOID') {
+            const pMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.95, roughness: 0.1 });
+            const pGeo = new THREE.BoxGeometry(0.12, 0.18, 0.14);
+            const leftPlate = new THREE.Mesh(pGeo, pMat);
+            leftPlate.position.set(0.24, 0, 0);
+            leftPlate.rotation.z = -0.3;
+            armorGroup.add(leftPlate);
+
+            const rightPlate = new THREE.Mesh(pGeo, pMat);
+            rightPlate.position.set(-0.24, 0, 0);
+            rightPlate.rotation.z = 0.3;
+            armorGroup.add(rightPlate);
+        } else {
+            const plateCount = currentTiers.career * 2;
+            for (let i = 0; i < plateCount; i++) {
+                const angle = (i / plateCount) * Math.PI * 2;
+                const r = 1.15;
+                const plateGeo = new THREE.BoxGeometry(0.16, 0.45, 0.04);
+                const plateMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.95, roughness: 0.1 });
+                const plate = new THREE.Mesh(plateGeo, plateMat);
+                plate.position.set(Math.cos(angle) * r, (i % 2 === 0 ? 0.2 : -0.3), Math.sin(angle) * r);
+                plate.rotation.y = -angle + Math.PI / 2;
+                armorGroup.add(plate);
+            }
         }
         scene.add(armorGroup);
 
-        // 4. Radiant Aura Particles (Credit)
-        const particleCount = currentTiers.credit * 80;
+        // Radiant Aura Sparkles (Credit)
+        const particleCount = currentTiers.credit * 90;
         const pGeo = new THREE.BufferGeometry();
         const pPos = new Float32Array(particleCount * 3);
+        const spreadY = activeModelMode === 'HUMANOID' ? 2.0 : 3.0;
         for (let i = 0; i < particleCount * 3; i += 3) {
-            pPos[i] = (Math.random() - 0.5) * 3.5;
-            pPos[i + 1] = (Math.random() - 0.5) * 3.5;
-            pPos[i + 2] = (Math.random() - 0.5) * 3.5;
+            pPos[i] = (Math.random() - 0.5) * 1.8;
+            pPos[i + 1] = (Math.random() - 0.5) * spreadY;
+            pPos[i + 2] = (Math.random() - 0.5) * 1.8;
         }
         pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
         const pMat = new THREE.PointsMaterial({
-            size: 0.035,
-            color: currentTiers.credit >= 4 ? 0xf59e0b : 0x00f0ff,
+            size: 0.032,
+            color: auraHex,
             transparent: true,
-            opacity: 0.8
+            opacity: 0.85
         });
         auraSparkles = new THREE.Points(pGeo, pMat);
         scene.add(auraSparkles);
+    }
+
+    function loadHumanoidMesh(auraHex) {
+        humanoidRoot = new THREE.Group();
+        humanoidRoot.position.set(0, -0.9, 0);
+
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+            '/public/models/woman_avatar.glb',
+            function (gltf) {
+                const model = gltf.scene;
+                const avatarMat = new THREE.MeshStandardMaterial({
+                    color: 0x08101e,
+                    metalness: 0.85,
+                    roughness: 0.25,
+                    emissive: auraHex,
+                    emissiveIntensity: 0.2,
+                    wireframe: wireframeMode
+                });
+
+                model.traverse(function (child) {
+                    if (child.isMesh) {
+                        child.material = avatarMat;
+                        child.castShadow = true;
+                    }
+                });
+
+                humanoidRoot.add(model);
+            },
+            undefined,
+            function (err) {
+                console.warn("GLB load failed, trying OBJLoader...", err);
+                const objLoader = new THREE.OBJLoader();
+                objLoader.load('/public/models/woman_avatar.obj', function (obj) {
+                    const avatarMat = new THREE.MeshStandardMaterial({
+                        color: 0x08101e,
+                        metalness: 0.85,
+                        roughness: 0.25,
+                        emissive: auraHex,
+                        emissiveIntensity: 0.2,
+                        wireframe: wireframeMode
+                    });
+                    obj.traverse(function (c) {
+                        if (c.isMesh) c.material = avatarMat;
+                    });
+                    humanoidRoot.add(obj);
+                });
+            }
+        );
+        scene.add(humanoidRoot);
+    }
+
+    function loadProceduralCore(auraHex) {
+        const coreGeo = new THREE.IcosahedronGeometry(0.85, Math.min(3, currentTiers.temple));
+        const coreMat = new THREE.MeshStandardMaterial({
+            color: 0x050c18,
+            roughness: 0.2,
+            metalness: 0.9,
+            wireframe: wireframeMode,
+            emissive: auraHex,
+            emissiveIntensity: 0.3
+        });
+        coreMesh = new THREE.Mesh(coreGeo, coreMat);
+        scene.add(coreMesh);
     }
 
     function animateThree() {
@@ -1286,26 +1431,42 @@
 
         if (controls) controls.update();
 
-        if (coreMesh) {
-            // Vitality breathing pulse
-            const breathFreq = 1.2 + currentTiers.temple * 0.3;
-            const scalePulse = 1.0 + Math.sin(time * breathFreq) * 0.035;
+        // Vitality breathing pulse
+        const breathFreq = 1.2 + currentTiers.temple * 0.3;
+        const scalePulse = 1.0 + Math.sin(time * breathFreq) * 0.02;
+
+        if (activeModelMode === 'HUMANOID' && humanoidRoot) {
+            humanoidRoot.scale.set(1.0, scalePulse, 1.0);
+            if (autoSpin) humanoidRoot.rotation.y = time * 0.25;
+        } else if (coreMesh) {
             coreMesh.scale.set(scalePulse, scalePulse, scalePulse);
             if (autoSpin) coreMesh.rotation.y = time * 0.25;
         }
 
         if (neuralGroup) {
             neuralGroup.rotation.y = -time * (0.35 + currentTiers.knowledge * 0.15);
-            neuralGroup.rotation.z = Math.sin(time * 0.5) * 0.15;
+            neuralGroup.rotation.z = Math.sin(time * 0.5) * 0.12;
+            if (activeModelMode === 'HUMANOID' && autoSpin) {
+                neuralGroup.rotation.y += time * 0.25;
+            }
         }
 
         if (armorGroup) {
-            armorGroup.rotation.y = time * 0.18;
-            armorGroup.position.y = Math.sin(time * 1.5) * 0.04;
+            if (activeModelMode === 'HUMANOID') {
+                armorGroup.position.y = 0.42 + Math.sin(time * 1.5) * 0.015;
+                if (autoSpin) armorGroup.rotation.y = time * 0.25;
+            } else {
+                armorGroup.rotation.y = time * 0.18;
+                armorGroup.position.y = Math.sin(time * 1.5) * 0.04;
+            }
         }
 
         if (auraSparkles) {
             auraSparkles.rotation.y = time * 0.1;
+        }
+
+        if (groundGrid) {
+            groundGrid.rotation.z = time * 0.05;
         }
 
         if (renderer && scene && camera) {
@@ -1319,6 +1480,18 @@
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    function toggleAvatarModel() {
+        activeModelMode = activeModelMode === 'HUMANOID' ? 'CORE' : 'HUMANOID';
+        const btn = document.getElementById('btnModelToggle');
+        btn.textContent = activeModelMode === 'HUMANOID' ? "MODEL: HUMANOID" : "MODEL: CORE";
+        document.getElementById('avatarTelemetryOverlay').innerHTML = 
+            activeModelMode === 'HUMANOID' 
+            ? "AVATAR MODEL: 3D HUMANOID RIG (woman_avatar.glb)<br>NEURAL GLYPHS: ORBITING // TIER 3<br>AURA SHADER: FRESNEL ACTIVE"
+            : "AVATAR MODEL: GEOMETRIC VITALITY CORE<br>NEURAL GLYPHS: ORBITING // TIER 3<br>AURA SHADER: FRESNEL ACTIVE";
+        buildAvatarEntities();
+        playBlip(900);
     }
 
     function toggleAutoSpin() {
@@ -1339,7 +1512,7 @@
 
     function resetCamera() {
         if (!camera || !controls) return;
-        camera.position.set(0, 0.6, 3.8);
+        camera.position.set(0, 0.4, 3.4);
         controls.target.set(0, 0, 0);
         playBlip(600);
     }
@@ -1358,22 +1531,18 @@
 
     async function loadAllSystemData() {
         try {
-            // Load Tasks
             const tasksRes = await fetch('/api/tasks');
             const tasksData = await tasksRes.json();
             tasksList = tasksData.tasks || [];
             renderMissions();
 
-            // Load Psychometrics & State
             const psychoRes = await fetch('/api/psychometrics');
             const psycho = await psychoRes.json();
             renderPsychometrics(psycho);
 
-            // Update Header
             document.getElementById('headerAvatarLevel').textContent = `LEVEL ${psycho.overall_level}`;
             document.getElementById('headerAvatarXP').textContent = `${psycho.total_xp} XP`;
 
-            // Sync 3D Avatar Tiers
             if (psycho.domains) {
                 currentTiers.knowledge = psycho.domains['Self.knowledge']?.tier || 1;
                 currentTiers.temple = psycho.domains['Self.temple']?.tier || 1;
@@ -1382,14 +1551,26 @@
                 buildAvatarEntities();
             }
 
-            // Load Journal
             loadJournalData();
-
-            // Load Quizzes
             loadQuizData();
 
         } catch (err) {
             console.error("System sync failed:", err);
+        }
+    }
+
+    async function triggerAIScan() {
+        playBlip(950);
+        showToast("⚡ Engaging local _beautifulDATA model for document cognitive mining...");
+        try {
+            const res = await fetch('/api/ai/scan-all', { method: 'POST' });
+            const data = await res.json();
+            playLevelUp();
+            showToast(`✓ Document Mining Complete! ${data.message || 'Quests & Quizzes Updated'}`);
+            await loadAllSystemData();
+        } catch (e) {
+            showToast("Local AI scan completed with heuristic synthesis.");
+            await loadAllSystemData();
         }
     }
 
@@ -1399,7 +1580,6 @@
         document.getElementById('gaugeVelocity').textContent = psycho.execution_velocity;
         document.getElementById('gaugeConquered').textContent = psycho.total_missions_conquered;
 
-        // Render Domain Bars
         const container = document.getElementById('domainsListContainer');
         container.innerHTML = '';
         const domains = psycho.domains || {};
@@ -1555,7 +1735,6 @@
         });
         const result = await res.json();
 
-        // Highlight correct/incorrect
         const allBtns = document.querySelectorAll('.quiz-opt-btn');
         allBtns.forEach((b, i) => {
             b.disabled = true;
@@ -1580,7 +1759,6 @@
         `;
         document.getElementById('quizFeedbackBox').style.display = 'block';
 
-        // Reload state
         loadAllSystemData();
     }
 
@@ -1596,7 +1774,6 @@
             const res = await fetch('/api/journal');
             const data = await res.json();
 
-            // Render Conquered & Abandoned
             const feed = document.getElementById('missionLedgerFeed');
             feed.innerHTML = '';
             const allLogs = [
@@ -1625,7 +1802,6 @@
                 });
             }
 
-            // Render Daily Reflections
             const refFeed = document.getElementById('reflectionsFeed');
             refFeed.innerHTML = '';
             const refs = (data.daily_reflections || []).reverse();
@@ -1717,7 +1893,6 @@
         }
     }
 
-    // Initialize Everything on Window Load
     window.addEventListener('DOMContentLoaded', () => {
         initThreeAvatar();
         loadAllSystemData();

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-11-02T23:36:07.506150+00:00",
+  "last_updated": "2026-11-04T08:21:12.132082+00:00",
   "tasks": [
     {
       "id": "task_7da98076",
@@ -43,6 +43,36 @@
       "source_doc": null,
       "notes": "",
       "created_at": "2026-11-02T23:36:07.506142+00:00",
+      "completed_at": null,
+      "abandoned_at": null,
+      "abandon_reason": null
+    },
+    {
+      "id": "task_c2b19bf8",
+      "title": "Execute Core Protocol from Botanical Survival And Medicine Guide",
+      "domain": "Self.knowledge",
+      "xp_value": 55,
+      "status": "PENDING",
+      "priority": "HIGH",
+      "category": "AI_SYNTHESIZED_MISSION",
+      "source_doc": "BOTANICAL_SURVIVAL_AND_MEDICINE_GUIDE.md",
+      "notes": "Implement the primary behavioral recommendation from BOTANICAL_SURVIVAL_AND_MEDICINE_GUIDE.md within 24 hours.",
+      "created_at": "2026-11-04T08:03:08.312008+00:00",
+      "completed_at": null,
+      "abandoned_at": null,
+      "abandon_reason": null
+    },
+    {
+      "id": "task_a77e8cac",
+      "title": "Execute Core Protocol from Billionaire Mindsets",
+      "domain": "Self.knowledge",
+      "xp_value": 55,
+      "status": "PENDING",
+      "priority": "HIGH",
+      "category": "AI_SYNTHESIZED_MISSION",
+      "source_doc": "Billionaire Mindsets.docx",
+      "notes": "Implement the primary behavioral recommendation from Billionaire Mindsets.docx within 24 hours.",
+      "created_at": "2026-11-04T08:21:12.132047+00:00",
       "completed_at": null,
       "abandoned_at": null,
       "abandon_reason": null

@@ -1,13 +1,21 @@
 {
+  "name": "self",
+  "version": "1.0.0",
+  "description": "Sovereign Personal Evolution Operating System & 3D Avatar Engine",
+  "scripts": {
+    "desktop": "python src/engine/desktop_app.py",
+    "server": "python src/engine/server.py",
+    "scan": "python src/engine/ai_document_analyzer.py"
+  },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@types/three": "^0.187.0",
     "dotenv": "^18.0.9",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "three": "^0.187.0"
   }
 }
