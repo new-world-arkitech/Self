@@ -3,471 +3,1476 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SELF. // Task & Mission Control</title>
+    <title>SELF. // SOVEREIGN LIFE OS & AVATAR EVOLUTION</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;900&family=JetBrains+Mono:wght@400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js + OrbitControls for 3D Avatar Holo-Dock -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
     <style>
         :root {
-            --bg-base: #050508;
-            --bg-card: rgba(15, 18, 28, 0.85);
-            --bg-input: #0a0d14;
-            --accent-cyan: #00f0ff;
-            --accent-gold: #eab308;
-            --accent-purple: #a855f7;
-            --accent-red: #ef4444;
-            --accent-green: #10b981;
-            --text-main: #e2e8f0;
-            --text-muted: #64748b;
-            --border-subtle: rgba(0, 240, 255, 0.15);
+            --bg-void: #030408;
+            --bg-panel: rgba(10, 14, 24, 0.75);
+            --bg-card: rgba(16, 22, 38, 0.65);
+            --bg-input: #060913;
+            --border-glow: rgba(0, 240, 255, 0.25);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            
+            --cyan-core: #00f0ff;
+            --cyan-glow: rgba(0, 240, 255, 0.4);
+            --gold-core: #f59e0b;
+            --gold-glow: rgba(245, 158, 11, 0.4);
+            --emerald-core: #10b981;
+            --crimson-core: #f43f5e;
+            --violet-core: #a855f7;
+            
+            --font-display: 'Rajdhani', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-body: 'Inter', sans-serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            user-select: none;
         }
 
         body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Courier New", monospace;
-            padding: 30px;
+            background-color: var(--bg-void);
+            color: #e2e8f0;
+            font-family: var(--font-body);
+            min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1000px;
+        /* Subtle scanline overlay */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.6;
         }
 
+        /* =====================================================================
+           HEADER & TELEMETRY BAR
+           ===================================================================== */
         header {
+            background: rgba(6, 9, 18, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 12px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 20px;
-            margin-bottom: 25px;
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: var(--accent-cyan);
-            text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            padding: 16px;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent-cyan);
+            z-index: 100;
         }
 
-        .stat-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
-        .stat-val {
-            font-size: 24px;
-            font-weight: 700;
+        .brand-title {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 3px;
             color: #fff;
-        }
-
-        .add-task-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-
-        .panel-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--accent-cyan);
-            margin-bottom: 15px;
+            text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+        .brand-title span {
+            color: var(--cyan-core);
+            text-shadow: 0 0 15px var(--cyan-glow);
+        }
+
+        .status-pill {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--border-glow);
+            color: var(--cyan-core);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--cyan-core);
+            box-shadow: 0 0 8px var(--cyan-core);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        .telemetry-cluster {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            font-family: var(--font-mono);
+        }
+
+        .avatar-level-badge {
+            display: flex;
+            align-items: center;
             gap: 12px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 6px 14px;
+            border-radius: 6px;
+        }
+
+        .level-text {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--gold-core);
+            letter-spacing: 1px;
+        }
+
+        .xp-text {
+            font-size: 11px;
+            color: #cbd5e1;
+        }
+
+        .sound-toggle-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--cyan-core);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+
+        .sound-toggle-btn:hover {
+            border-color: var(--cyan-core);
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        /* =====================================================================
+           NAVIGATION TABS
+           ===================================================================== */
+        .nav-dock {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 20px 0 20px;
+        }
+
+        .nav-tab-btn {
+            background: rgba(10, 15, 28, 0.7);
+            border: 1px solid var(--border-subtle);
+            color: #94a3b8;
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 10px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab-btn:hover {
+            color: #fff;
+            border-color: var(--cyan-core);
+            background: rgba(0, 240, 255, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab-btn.active {
+            color: #030408;
+            background: var(--cyan-core);
+            border-color: var(--cyan-core);
+            box-shadow: 0 0 20px var(--cyan-glow);
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================================
+           MAIN LAYOUT VIEWPORT
+           ===================================================================== */
+        .app-viewport {
+            max-width: 1540px;
+            margin: 20px auto;
+            padding: 0 25px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =====================================================================
+           TAB 1: AVATAR DOCK & PSYCHOMETRICS
+           ===================================================================== */
+        .avatar-dock-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 25px;
+            min-height: 640px;
+        }
+
+        @media (max-width: 1100px) {
+            .avatar-dock-grid { grid-template-columns: 1fr; }
+        }
+
+        .holo-canvas-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        .canvas-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(4, 7, 14, 0.6);
+        }
+
+        .holo-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--cyan-core);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #threeCanvasContainer {
+            flex: 1;
+            width: 100%;
+            min-height: 480px;
+            position: relative;
+            cursor: grab;
+        }
+
+        #threeCanvasContainer:active {
+            cursor: grabbing;
+        }
+
+        .canvas-overlay-telemetry {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(4, 7, 14, 0.7);
+            border: 1px solid var(--border-subtle);
+            padding: 10px 14px;
+            border-radius: 6px;
+            backdrop-filter: blur(8px);
+            pointer-events: none;
+            line-height: 1.6;
+        }
+
+        .canvas-controls-dock {
+            padding: 12px 20px;
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(4, 7, 14, 0.6);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .mini-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: #cbd5e1;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mini-btn:hover, .mini-btn.active {
+            background: rgba(0, 240, 255, 0.15);
+            border-color: var(--cyan-core);
+            color: #fff;
+        }
+
+        /* Psychometrics Panel */
+        .psychometrics-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .metrics-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 22px;
+            backdrop-filter: blur(16px);
+        }
+
+        .metrics-card-header {
+            font-family: var(--font-display);
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
 
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+        .gauges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
-        input, select {
-            background: var(--bg-input);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 10px 14px;
-            color: #fff;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.2s;
+        .gauge-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        input:focus, select:focus {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
-        }
-
-        button.btn-add {
-            background: var(--accent-cyan);
-            color: #050508;
-            border: none;
-            padding: 10px 20px;
-            font-weight: 700;
-            font-size: 13px;
+        .gauge-val {
+            font-family: var(--font-display);
+            font-size: 38px;
+            font-weight: 900;
             letter-spacing: 1px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
+            margin: 4px 0;
         }
 
-        button.btn-add:hover {
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-            transform: translateY(-1px);
+        .gauge-lbl {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
         }
 
-        .filter-bar {
+        .domains-list {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
         }
 
-        .filter-chip {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-muted);
+        .domain-row {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .domain-meta {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .domain-bar-bg {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .domain-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* =====================================================================
+           TAB 2: MISSION MATRIX
+           ===================================================================== */
+        .missions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mission-action-bar {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            backdrop-filter: blur(16px);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            color: #94a3b8;
+            font-family: var(--font-mono);
+            font-size: 12px;
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .filter-chip.active, .filter-chip:hover {
+        .filter-btn:hover, .filter-btn.active {
             color: #fff;
             background: rgba(0, 240, 255, 0.15);
-            border-color: var(--accent-cyan);
+            border-color: var(--cyan-core);
         }
 
-        .task-list {
+        .btn-deploy-mission {
+            background: var(--cyan-core);
+            color: #030408;
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 10px 22px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--cyan-glow);
+            transition: all 0.2s;
+        }
+
+        .btn-deploy-mission:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--cyan-glow);
+        }
+
+        .tasks-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .task-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 16px 20px;
+        .mission-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 18px 24px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 15px;
-            transition: border-color 0.2s;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(12px);
         }
 
-        .task-card:hover {
-            border-color: rgba(0, 240, 255, 0.3);
+        .mission-card:hover {
+            border-color: var(--border-glow);
+            transform: translateX(4px);
+            background: rgba(14, 20, 34, 0.85);
         }
 
-        .task-card.completed {
-            border-left: 4px solid var(--accent-green);
+        .mission-card.completed {
+            border-left: 4px solid var(--emerald-core);
             opacity: 0.65;
         }
 
-        .task-card.completed .task-title {
+        .mission-card.completed .mission-title {
             text-decoration: line-through;
-            color: var(--text-muted);
+            color: #94a3b8;
         }
 
-        .task-card.abandoned {
-            border-left: 4px solid var(--accent-red);
-            opacity: 0.5;
+        .mission-card.abandoned {
+            border-left: 4px solid var(--crimson-core);
+            opacity: 0.55;
         }
 
-        .task-left {
+        .mission-content-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
             flex: 1;
         }
 
-        .btn-check {
-            width: 22px;
-            height: 22px;
+        .conquer-checkbox {
+            width: 24px;
+            height: 24px;
             border-radius: 6px;
-            border: 2px solid var(--accent-cyan);
+            border: 2px solid var(--cyan-core);
             background: transparent;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             color: transparent;
+            font-weight: 900;
+            font-size: 14px;
             transition: all 0.2s;
         }
 
-        .task-card.completed .btn-check {
-            background: var(--accent-green);
-            border-color: var(--accent-green);
-            color: #050508;
-            font-weight: bold;
+        .mission-card.completed .conquer-checkbox {
+            background: var(--emerald-core);
+            border-color: var(--emerald-core);
+            color: #030408;
         }
 
-        .task-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .task-title {
-            font-size: 15px;
+        .mission-title {
+            font-size: 16px;
             font-weight: 600;
+            letter-spacing: 0.3px;
+            color: #f1f5f9;
         }
 
-        .task-meta {
-            font-size: 12px;
-            color: var(--text-muted);
+        .mission-badges {
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-top: 6px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .badge-pill {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
         }
 
         .badge-domain {
-            padding: 2px 8px;
-            border-radius: 4px;
             background: rgba(99, 102, 241, 0.2);
-            color: #818cf8;
-            font-size: 11px;
-            font-weight: bold;
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.4);
         }
 
         .badge-xp {
-            color: var(--accent-gold);
-            font-weight: bold;
+            color: var(--gold-core);
+            font-weight: 700;
         }
-
-        .badge-priority {
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: bold;
-        }
-        .priority-HIGH, .priority-CRITICAL { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-        .priority-MEDIUM { background: rgba(234, 179, 8, 0.2); color: #facc15; }
-        .priority-LOW { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; }
 
         .btn-abandon {
             background: transparent;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-            padding: 6px 12px;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: var(--crimson-core);
+            font-family: var(--font-mono);
             font-size: 11px;
+            padding: 6px 14px;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .btn-abandon:hover {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: #ef4444;
+            background: rgba(244, 63, 94, 0.15);
+            border-color: var(--crimson-core);
+        }
+
+        /* =====================================================================
+           TAB 3: COGNITIVE VERIFICATION TERMINAL
+           ===================================================================== */
+        .terminal-panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .terminal-prompt {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .quiz-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .quiz-opt-btn {
+            background: rgba(16, 22, 38, 0.8);
+            border: 1px solid var(--border-subtle);
+            color: #e2e8f0;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .quiz-opt-btn:hover {
+            border-color: var(--cyan-core);
+            background: rgba(0, 240, 255, 0.08);
+            transform: translateX(4px);
+        }
+
+        .quiz-opt-btn.correct {
+            border-color: var(--emerald-core);
+            background: rgba(16, 185, 129, 0.15);
+            color: #fff;
+        }
+
+        .quiz-opt-btn.wrong {
+            border-color: var(--crimson-core);
+            background: rgba(244, 63, 94, 0.15);
+            color: #fff;
+        }
+
+        .quiz-opt-letter {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .quiz-feedback-box {
+            display: none;
+            background: rgba(8, 14, 24, 0.9);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* =====================================================================
+           TAB 4: THE CHRONICLE & JOURNAL
+           ===================================================================== */
+        .chronicle-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .chronicle-grid { grid-template-columns: 1fr; }
+        }
+
+        .journal-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .journal-entry {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 14px;
+        }
+
+        .journal-timestamp {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        /* Modal Dialog */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(2, 4, 8, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-card {
+            background: rgba(12, 17, 30, 0.95);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 520px;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.2);
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--cyan-core);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        input[type="text"], input[type="number"], select, textarea {
+            background: var(--bg-input);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 14px;
+            color: #fff;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--cyan-core);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 25px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <div>
-            <div class="logo">SELF. // MISSIONS & TASKS</div>
-            <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
-                Direct Active Tasks bound to 3D Avatar Evolution
+<div class="scanlines"></div>
+
+<!-- HEADER BAR -->
+<header>
+    <div class="brand-container">
+        <div class="brand-title">SELF<span>.</span></div>
+        <div class="status-pill">
+            <div class="status-dot"></div>
+            SOVEREIGN OS ONLINE
+        </div>
+    </div>
+    <div class="telemetry-cluster">
+        <div class="avatar-level-badge">
+            <div class="level-text" id="headerAvatarLevel">LEVEL 1</div>
+            <div class="xp-text" id="headerAvatarXP">0 / 2000 XP</div>
+        </div>
+        <button class="sound-toggle-btn" id="sfxToggleBtn" onclick="toggleAudio()">SFX: ON</button>
+    </div>
+</header>
+
+<!-- NAVIGATION DOCK -->
+<nav class="nav-dock">
+    <button class="nav-tab-btn active" onclick="switchTab('avatarTab', this)">
+        <span>◈</span> AVATAR & PSYCHOMETRICS
+    </button>
+    <button class="nav-tab-btn" onclick="switchTab('missionsTab', this)">
+        <span>⚡</span> MISSIONS & QUESTS
+    </button>
+    <button class="nav-tab-btn" onclick="switchTab('verificationTab', this)">
+        <span>🧠</span> COGNITIVE VERIFICATION
+    </button>
+    <button class="nav-tab-btn" onclick="switchTab('chronicleTab', this)">
+        <span>📖</span> THE CHRONICLE
+    </button>
+</nav>
+
+<!-- MAIN VIEWPORT -->
+<main class="app-viewport">
+
+    <!-- ===================================================================
+         VIEW 1: AVATAR & PSYCHOMETRICS DOCK
+         =================================================================== -->
+    <section id="avatarTab" class="view-section active">
+        <div class="avatar-dock-grid">
+            <!-- 3D WebGL Canvas -->
+            <div class="holo-canvas-card">
+                <div class="canvas-header">
+                    <div class="holo-title">
+                        <span>❖</span> 3D BIOMETRIC HOLO-AVATAR
+                    </div>
+                    <div style="font-family: var(--font-mono); font-size: 11px; color: #64748b;">
+                        ROTATION: DRAG / ZOOM: SCROLL
+                    </div>
+                </div>
+
+                <div id="threeCanvasContainer"></div>
+
+                <div class="canvas-overlay-telemetry" id="avatarTelemetryOverlay">
+                    VITALITY: ALIGNED // CORE GLSL DISPLACEMENT ACTIVE<br>
+                    NEURAL GLYPHS: ORBITING // TIER 3 RESONANCE<br>
+                    AURA SHADER: FRESNEL EMERALD (TIER 2)
+                </div>
+
+                <div class="canvas-controls-dock">
+                    <button class="mini-btn active" id="btnAutoSpin" onclick="toggleAutoSpin()">AUTO-SPIN: ON</button>
+                    <button class="mini-btn" id="btnWireframe" onclick="toggleWireframe()">WIREFRAME</button>
+                    <button class="mini-btn" onclick="resetCamera()">RESET VIEW</button>
+                    <div style="flex: 1;"></div>
+                    <select id="vitalityPoseSelector" class="mini-btn" style="background: rgba(0,0,0,0.5);" onchange="changeVitalityPose(this.value)">
+                        <option value="1">Posture: Slouched / Depleted</option>
+                        <option value="2">Posture: Baseline Breath</option>
+                        <option value="3" selected>Posture: Aligned Focus</option>
+                        <option value="4">Posture: Combat Poise</option>
+                        <option value="5">Posture: Sovereign Levitation</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Psychometrics & High-Achiever Radar -->
+            <div class="psychometrics-column">
+                <div class="metrics-card">
+                    <div class="metrics-card-header">
+                        <span>PSYCHOMETRIC TELEMETRY</span>
+                        <span style="font-family: var(--font-mono); font-size: 12px; color: var(--cyan-core);">ALGORITHMIC</span>
+                    </div>
+
+                    <div class="gauges-grid">
+                        <div class="gauge-box" style="border-top: 3px solid var(--gold-core);">
+                            <div class="gauge-lbl">Grit Score</div>
+                            <div class="gauge-val" id="gaugeGrit" style="color: var(--gold-core);">85</div>
+                            <div style="font-size: 10px; color: #64748b; font-family: var(--font-mono);">PERSEVERANCE MATRIX</div>
+                        </div>
+
+                        <div class="gauge-box" style="border-top: 3px solid var(--cyan-core);">
+                            <div class="gauge-lbl">Retention</div>
+                            <div class="gauge-val" id="gaugeRetention" style="color: var(--cyan-core);">92%</div>
+                            <div style="font-size: 10px; color: #64748b; font-family: var(--font-mono);">SM-2 COGNITIVE DECAY</div>
+                        </div>
+
+                        <div class="gauge-box" style="border-top: 3px solid var(--emerald-core);">
+                            <div class="gauge-lbl">Exec Velocity</div>
+                            <div class="gauge-val" id="gaugeVelocity" style="color: var(--emerald-core);">7.5</div>
+                            <div style="font-size: 10px; color: #64748b; font-family: var(--font-mono);">ACTION-TO-THEORY</div>
+                        </div>
+
+                        <div class="gauge-box" style="border-top: 3px solid var(--violet-core);">
+                            <div class="gauge-lbl">Conquered</div>
+                            <div class="gauge-val" id="gaugeConquered" style="color: var(--violet-core);">-</div>
+                            <div style="font-size: 10px; color: #64748b; font-family: var(--font-mono);">COMPLETED MISSIONS</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-card">
+                    <div class="metrics-card-header">
+                        <span>LIFE DOMAINS BREAKDOWN</span>
+                    </div>
+                    <div class="domains-list" id="domainsListContainer">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="avatarBadge" style="text-align: right;">
-            <div style="font-size: 11px; color: var(--text-muted);">AVATAR COMPOSITE</div>
-            <div id="avatarLevel" style="font-size: 16px; font-weight: bold; color: var(--accent-cyan);">LEVEL 1 (110 XP)</div>
-        </div>
-    </header>
+    </section>
 
-    <!-- Stats Bar -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-label">Total Missions</div>
-            <div class="stat-val" id="statTotal">-</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Conquered</div>
-            <div class="stat-val" id="statCompleted" style="color: var(--accent-green);">-</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">In-Flight / Pending</div>
-            <div class="stat-val" id="statPending" style="color: var(--accent-cyan);">-</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Grit Completion</div>
-            <div class="stat-val" id="statRate" style="color: var(--accent-gold);">-</div>
-        </div>
-    </div>
+    <!-- ===================================================================
+         VIEW 2: MISSIONS & QUEST MATRIX
+         =================================================================== -->
+    <section id="missionsTab" class="view-section">
+        <div class="missions-container">
+            <div class="mission-action-bar">
+                <div class="filter-group">
+                    <button class="filter-btn active" onclick="filterMissions('ALL', this)">ALL MISSIONS</button>
+                    <button class="filter-btn" onclick="filterMissions('PENDING', this)">PENDING</button>
+                    <button class="filter-btn" onclick="filterMissions('COMPLETED', this)">CONQUERED</button>
+                    <button class="filter-btn" onclick="filterMissions('ABANDONED', this)">ABANDONED</button>
+                </div>
+                <button class="btn-deploy-mission" onclick="openDeployModal()">+ DEPLOY MISSION</button>
+            </div>
 
-    <!-- Add Task Panel -->
-    <div class="add-task-panel">
-        <div class="panel-title">
-            <span>+</span> Deploy New Mission / Task
+            <div class="tasks-grid" id="missionsGridContainer">
+                <!-- Rendered dynamically -->
+            </div>
         </div>
-        <div class="form-row">
-            <input type="text" id="taskInput" placeholder="What task or habit must be executed?" autofocus>
-            <select id="domainSelect">
-                <option value="Self.knowledge">Self.knowledge (Neural HUD)</option>
-                <option value="Self.temple">Self.temple (Vitality & Body)</option>
-                <option value="Self.credit">Self.credit (Radiance & Aura)</option>
-                <option value="Self.career">Self.career (Exoskeleton Armor)</option>
-                <option value="Self.legal">Self.legal (Structural Seal)</option>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 3: COGNITIVE VERIFICATION TERMINAL
+         =================================================================== -->
+    <section id="verificationTab" class="view-section">
+        <div class="terminal-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="font-family: var(--font-mono); font-size: 12px; color: var(--cyan-core); letter-spacing: 1px;">
+                    // ACTIVE RECALL PROTOCOL // SM-2 SPHERICAL EVALUATION
+                </div>
+                <div id="quizCounterPill" class="status-pill">CHALLENGE 1 / 5</div>
+            </div>
+
+            <div class="terminal-prompt" id="quizQuestionText">Loading verification questions...</div>
+
+            <div class="quiz-options-list" id="quizOptionsContainer"></div>
+
+            <div class="quiz-feedback-box" id="quizFeedbackBox">
+                <div style="font-weight: 700; margin-bottom: 6px;" id="feedbackResultTitle"></div>
+                <div id="feedbackExplanationText"></div>
+                <button class="mini-btn" style="margin-top: 15px; background: var(--cyan-core); color: #000; font-weight: bold;" onclick="loadNextQuiz()">NEXT CHALLENGE ➔</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 4: THE CHRONICLE & JOURNAL
+         =================================================================== -->
+    <section id="chronicleTab" class="view-section">
+        <div class="chronicle-grid">
+            <div class="metrics-card">
+                <div class="metrics-card-header">
+                    <span>CONQUERED & ABANDONED LEDGER</span>
+                </div>
+                <div class="journal-feed" id="missionLedgerFeed">
+                    <!-- Conquered and Abandoned Missions -->
+                </div>
+            </div>
+
+            <div class="metrics-card">
+                <div class="metrics-card-header">
+                    <span>DAILY STREAM OF CONSCIOUSNESS</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;">
+                    <textarea id="reflectionInput" rows="3" placeholder="Record deep insights, mindset shifts, or daily breakthroughs..."></textarea>
+                    <button class="btn-deploy-mission" style="align-self: flex-end;" onclick="submitReflection()">LOG INSIGHT</button>
+                </div>
+                <div class="journal-feed" id="reflectionsFeed">
+                    <!-- Daily Reflections -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- DEPLOY MISSION MODAL -->
+<div class="modal-overlay" id="deployModal">
+    <div class="modal-card">
+        <div class="modal-title">+ DEPLOY NEW MISSION</div>
+        <div class="form-group">
+            <label>Mission Directive / Title</label>
+            <input type="text" id="modalTaskTitle" placeholder="e.g., Identify 3 toxic plants or 100 burpees">
+        </div>
+        <div class="form-group">
+            <label>Domain</label>
+            <select id="modalTaskDomain">
+                <option value="Self.knowledge">Self.knowledge (Neural HUD / Mental Models)</option>
+                <option value="Self.temple">Self.temple (Vitality Posture / Physical Body)</option>
+                <option value="Self.credit">Self.credit (Radiance & Prosperity Aura)</option>
+                <option value="Self.career">Self.career (Exoskeleton Kinetic Armor)</option>
+                <option value="Self.legal">Self.legal (Structural Foundation)</option>
             </select>
-            <select id="prioritySelect">
+        </div>
+        <div class="form-group">
+            <label>Priority</label>
+            <select id="modalTaskPriority">
                 <option value="MEDIUM">Medium Priority</option>
                 <option value="HIGH">High Priority</option>
-                <option value="CRITICAL">Critical</option>
+                <option value="CRITICAL">Critical Direct Impact</option>
                 <option value="LOW">Low</option>
             </select>
-            <input type="number" id="xpInput" placeholder="XP (Auto)" min="10" max="500" style="width: 100px;">
-            <button class="btn-add" onclick="submitTask()">ADD MISSION</button>
         </div>
-    </div>
-
-    <!-- Filter Bar -->
-    <div class="filter-bar">
-        <div class="filter-chip active" onclick="setFilter('ALL', this)">ALL</div>
-        <div class="filter-chip" onclick="setFilter('PENDING', this)">PENDING</div>
-        <div class="filter-chip" onclick="setFilter('COMPLETED', this)">CONQUERED</div>
-        <div class="filter-chip" onclick="setFilter('ABANDONED', this)">ABANDONED</div>
-    </div>
-
-    <!-- Task List -->
-    <div class="task-list" id="taskListContainer">
-        <!-- Rendered dynamically -->
+        <div class="form-group">
+            <label>XP Reward (Leave blank for auto)</label>
+            <input type="number" id="modalTaskXP" placeholder="50" min="10" max="500">
+        </div>
+        <div class="modal-actions">
+            <button class="mini-btn" onclick="closeDeployModal()">CANCEL</button>
+            <button class="btn-deploy-mission" onclick="submitModalTask()">DEPLOY</button>
+        </div>
     </div>
 </div>
 
+<!-- ===================================================================
+     JAVASCRIPT LOGIC, AUDIO SYNTHESIZER, & 3D WEBGL ENGINE
+     =================================================================== -->
 <script>
-    let currentFilter = 'ALL';
-    let tasksData = [];
+    // --- 1. PROCEDURAL WEB AUDIO SYNTHESIZER ---
+    let audioCtx = null;
+    let sfxEnabled = true;
 
-    async function loadData() {
+    function getAudioContext() {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        return audioCtx;
+    }
+
+    function toggleAudio() {
+        sfxEnabled = !sfxEnabled;
+        const btn = document.getElementById('sfxToggleBtn');
+        btn.textContent = sfxEnabled ? "SFX: ON" : "SFX: MUTED";
+        btn.style.color = sfxEnabled ? "var(--cyan-core)" : "#64748b";
+        if (sfxEnabled) playBlip();
+    }
+
+    function playBlip(freq = 800) {
+        if (!sfxEnabled) return;
         try {
-            const res = await fetch('/api/tasks');
-            const data = await res.json();
-            tasksData = data.tasks || [];
-            updateStats(data.stats);
+            const ctx = getAudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(freq * 1.5, ctx.currentTime + 0.05);
+            gain.gain.setValueAtTime(0.08, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.05);
+        } catch (e) {}
+    }
 
-            // Fetch avatar state
-            const stateRes = await fetch('/api/state');
-            const state = await stateRes.json();
-            if (state.avatar_composite) {
-                document.getElementById('avatarLevel').textContent = 
-                    `LEVEL ${state.avatar_composite.overall_level} (${state.avatar_composite.total_xp} XP)`;
-            }
+    function playLevelUp() {
+        if (!sfxEnabled) return;
+        try {
+            const ctx = getAudioContext();
+            const freqs = [523.25, 659.25, 783.99, 1046.50]; // C Major arpeggio
+            freqs.forEach((f, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = "triangle";
+                osc.frequency.setValueAtTime(f, ctx.currentTime + idx * 0.08);
+                gain.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.35);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(ctx.currentTime + idx * 0.08);
+                osc.stop(ctx.currentTime + idx * 0.08 + 0.35);
+            });
+        } catch (e) {}
+    }
 
-            renderTasks();
-        } catch (err) {
-            console.error("Error loading task data:", err);
+    function playAlert() {
+        if (!sfxEnabled) return;
+        try {
+            const ctx = getAudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sawtooth";
+            osc.frequency.setValueAtTime(180, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.15);
+        } catch (e) {}
+    }
+
+    // --- 2. THREE.JS 3D HOLO-AVATAR ENGINE ---
+    let scene, camera, renderer, controls;
+    let coreMesh, neuralGroup, armorGroup, auraSparkles;
+    let autoSpin = true;
+    let wireframeMode = false;
+    let currentTiers = { knowledge: 3, temple: 3, career: 2, credit: 2 };
+
+    function initThreeAvatar() {
+        const container = document.getElementById('threeCanvasContainer');
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x030408, 0.08);
+
+        camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+        camera.position.set(0, 0.6, 3.8);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 1.8;
+        controls.maxDistance = 6.0;
+
+        // Lights
+        const ambLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambLight);
+
+        const dirLight = new THREE.DirectionalLight(0x00f0ff, 1.2);
+        dirLight.position.set(5, 8, 5);
+        scene.add(dirLight);
+
+        const pointLight = new THREE.PointLight(0xf59e0b, 1.5, 10);
+        pointLight.position.set(-3, 2, -2);
+        scene.add(pointLight);
+
+        buildAvatarEntities();
+
+        window.addEventListener('resize', onWindowResize);
+        animateThree();
+    }
+
+    function buildAvatarEntities() {
+        // Clear previous meshes
+        if (coreMesh) scene.remove(coreMesh);
+        if (neuralGroup) scene.remove(neuralGroup);
+        if (armorGroup) scene.remove(armorGroup);
+        if (auraSparkles) scene.remove(auraSparkles);
+
+        // 1. Core Vitality Anatomy (Temple)
+        const coreGeo = new THREE.IcosahedronGeometry(0.85, Math.min(3, currentTiers.temple));
+        const coreMat = new THREE.MeshStandardMaterial({
+            color: 0x050c18,
+            roughness: 0.2,
+            metalness: 0.9,
+            wireframe: wireframeMode,
+            emissive: currentTiers.credit >= 4 ? 0xf59e0b : 0x00f0ff,
+            emissiveIntensity: 0.25
+        });
+        coreMesh = new THREE.Mesh(coreGeo, coreMat);
+        scene.add(coreMesh);
+
+        // 2. Neural HUD Glyphs & Halo (Knowledge)
+        neuralGroup = new THREE.Group();
+        const ringGeo = new THREE.TorusGeometry(1.3, 0.015, 16, 64);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.75 });
+        const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+        ringMesh.rotation.x = Math.PI / 2.2;
+        neuralGroup.add(ringMesh);
+
+        const glyphCount = currentTiers.knowledge * 3;
+        for (let i = 0; i < glyphCount; i++) {
+            const angle = (i / glyphCount) * Math.PI * 2;
+            const r = 1.35;
+            const glyphGeo = new THREE.OctahedronGeometry(0.05, 0);
+            const glyphMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff });
+            const glyph = new THREE.Mesh(glyphGeo, glyphMat);
+            glyph.position.set(Math.cos(angle) * r, 0.05 * Math.sin(angle * 3), Math.sin(angle) * r);
+            neuralGroup.add(glyph);
+        }
+        scene.add(neuralGroup);
+
+        // 3. Kinetic Exoskeleton Armor Plates (Career)
+        armorGroup = new THREE.Group();
+        const plateCount = currentTiers.career * 2;
+        for (let i = 0; i < plateCount; i++) {
+            const angle = (i / plateCount) * Math.PI * 2;
+            const r = 1.15;
+            const plateGeo = new THREE.BoxGeometry(0.16, 0.45, 0.04);
+            const plateMat = new THREE.MeshStandardMaterial({
+                color: 0x1e293b,
+                metalness: 0.95,
+                roughness: 0.1
+            });
+            const plate = new THREE.Mesh(plateGeo, plateMat);
+            plate.position.set(Math.cos(angle) * r, (i % 2 === 0 ? 0.2 : -0.3), Math.sin(angle) * r);
+            plate.rotation.y = -angle + Math.PI / 2;
+            armorGroup.add(plate);
+        }
+        scene.add(armorGroup);
+
+        // 4. Radiant Aura Particles (Credit)
+        const particleCount = currentTiers.credit * 80;
+        const pGeo = new THREE.BufferGeometry();
+        const pPos = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            pPos[i] = (Math.random() - 0.5) * 3.5;
+            pPos[i + 1] = (Math.random() - 0.5) * 3.5;
+            pPos[i + 2] = (Math.random() - 0.5) * 3.5;
+        }
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        const pMat = new THREE.PointsMaterial({
+            size: 0.035,
+            color: currentTiers.credit >= 4 ? 0xf59e0b : 0x00f0ff,
+            transparent: true,
+            opacity: 0.8
+        });
+        auraSparkles = new THREE.Points(pGeo, pMat);
+        scene.add(auraSparkles);
+    }
+
+    function animateThree() {
+        requestAnimationFrame(animateThree);
+        const time = performance.now() * 0.001;
+
+        if (controls) controls.update();
+
+        if (coreMesh) {
+            // Vitality breathing pulse
+            const breathFreq = 1.2 + currentTiers.temple * 0.3;
+            const scalePulse = 1.0 + Math.sin(time * breathFreq) * 0.035;
+            coreMesh.scale.set(scalePulse, scalePulse, scalePulse);
+            if (autoSpin) coreMesh.rotation.y = time * 0.25;
+        }
+
+        if (neuralGroup) {
+            neuralGroup.rotation.y = -time * (0.35 + currentTiers.knowledge * 0.15);
+            neuralGroup.rotation.z = Math.sin(time * 0.5) * 0.15;
+        }
+
+        if (armorGroup) {
+            armorGroup.rotation.y = time * 0.18;
+            armorGroup.position.y = Math.sin(time * 1.5) * 0.04;
+        }
+
+        if (auraSparkles) {
+            auraSparkles.rotation.y = time * 0.1;
+        }
+
+        if (renderer && scene && camera) {
+            renderer.render(scene, camera);
         }
     }
 
-    function updateStats(stats) {
-        if (!stats) return;
-        document.getElementById('statTotal').textContent = stats.total_tasks;
-        document.getElementById('statCompleted').textContent = stats.completed;
-        document.getElementById('statPending').textContent = stats.pending;
-        document.getElementById('statRate').textContent = `${stats.completion_rate}%`;
+    function onWindowResize() {
+        const container = document.getElementById('threeCanvasContainer');
+        if (!container || !camera || !renderer) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
     }
 
-    function setFilter(filter, el) {
-        currentFilter = filter;
-        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-        el.classList.add('active');
-        renderTasks();
+    function toggleAutoSpin() {
+        autoSpin = !autoSpin;
+        const btn = document.getElementById('btnAutoSpin');
+        btn.textContent = autoSpin ? "AUTO-SPIN: ON" : "AUTO-SPIN: OFF";
+        btn.classList.toggle('active', autoSpin);
+        playBlip(700);
     }
 
-    function renderTasks() {
-        const container = document.getElementById('taskListContainer');
+    function toggleWireframe() {
+        wireframeMode = !wireframeMode;
+        const btn = document.getElementById('btnWireframe');
+        btn.classList.toggle('active', wireframeMode);
+        buildAvatarEntities();
+        playBlip(900);
+    }
+
+    function resetCamera() {
+        if (!camera || !controls) return;
+        camera.position.set(0, 0.6, 3.8);
+        controls.target.set(0, 0, 0);
+        playBlip(600);
+    }
+
+    function changeVitalityPose(tierVal) {
+        currentTiers.temple = parseInt(tierVal, 10);
+        buildAvatarEntities();
+        playBlip(850);
+    }
+
+    // --- 3. UI STATE, MISSIONS & VERIFICATION API ---
+    let tasksList = [];
+    let currentMissionFilter = 'ALL';
+    let quizCards = [];
+    let currentQuizIndex = 0;
+
+    async function loadAllSystemData() {
+        try {
+            // Load Tasks
+            const tasksRes = await fetch('/api/tasks');
+            const tasksData = await tasksRes.json();
+            tasksList = tasksData.tasks || [];
+            renderMissions();
+
+            // Load Psychometrics & State
+            const psychoRes = await fetch('/api/psychometrics');
+            const psycho = await psychoRes.json();
+            renderPsychometrics(psycho);
+
+            // Update Header
+            document.getElementById('headerAvatarLevel').textContent = `LEVEL ${psycho.overall_level}`;
+            document.getElementById('headerAvatarXP').textContent = `${psycho.total_xp} XP`;
+
+            // Sync 3D Avatar Tiers
+            if (psycho.domains) {
+                currentTiers.knowledge = psycho.domains['Self.knowledge']?.tier || 1;
+                currentTiers.temple = psycho.domains['Self.temple']?.tier || 1;
+                currentTiers.career = psycho.domains['Self.career']?.tier || 1;
+                currentTiers.credit = psycho.domains['Self.credit']?.tier || 1;
+                buildAvatarEntities();
+            }
+
+            // Load Journal
+            loadJournalData();
+
+            // Load Quizzes
+            loadQuizData();
+
+        } catch (err) {
+            console.error("System sync failed:", err);
+        }
+    }
+
+    function renderPsychometrics(psycho) {
+        document.getElementById('gaugeGrit').textContent = psycho.grit_score;
+        document.getElementById('gaugeRetention').textContent = `${psycho.cognitive_retention_pct}%`;
+        document.getElementById('gaugeVelocity').textContent = psycho.execution_velocity;
+        document.getElementById('gaugeConquered').textContent = psycho.total_missions_conquered;
+
+        // Render Domain Bars
+        const container = document.getElementById('domainsListContainer');
+        container.innerHTML = '';
+        const domains = psycho.domains || {};
+
+        const domainColors = {
+            'Self.knowledge': 'var(--cyan-core)',
+            'Self.temple': 'var(--emerald-core)',
+            'Self.credit': 'var(--gold-core)',
+            'Self.career': 'var(--violet-core)',
+            'Self.legal': '#94a3b8'
+        };
+
+        for (const [domKey, data] of Object.entries(domains)) {
+            const row = document.createElement('div');
+            row.className = 'domain-row';
+            const pct = Math.min(100, Math.round((data.earned_xp / Math.max(1, data.next_tier_xp)) * 100));
+            const color = domainColors[domKey] || 'var(--cyan-core)';
+
+            row.innerHTML = `
+                <div class="domain-meta">
+                    <span style="font-weight: 700; color: #fff;">${domKey}</span>
+                    <span style="color: ${color};">TIER ${data.tier} (${data.earned_xp} / ${data.next_tier_xp} XP)</span>
+                </div>
+                <div class="domain-bar-bg">
+                    <div class="domain-bar-fill" style="width: ${pct}%; background: ${color};"></div>
+                </div>
+            `;
+            container.appendChild(row);
+        }
+    }
+
+    function renderMissions() {
+        const container = document.getElementById('missionsGridContainer');
         container.innerHTML = '';
 
-        let filtered = tasksData;
-        if (currentFilter === 'PENDING') {
-            filtered = tasksData.filter(t => t.status === 'PENDING' || t.status === 'IN_PROGRESS');
-        } else if (currentFilter === 'COMPLETED') {
-            filtered = tasksData.filter(t => t.status === 'COMPLETED');
-        } else if (currentFilter === 'ABANDONED') {
-            filtered = tasksData.filter(t => t.status === 'ABANDONED');
+        let filtered = tasksList;
+        if (currentMissionFilter === 'PENDING') {
+            filtered = tasksList.filter(t => t.status === 'PENDING' || t.status === 'IN_PROGRESS');
+        } else if (currentMissionFilter === 'COMPLETED') {
+            filtered = tasksList.filter(t => t.status === 'COMPLETED');
+        } else if (currentMissionFilter === 'ABANDONED') {
+            filtered = tasksList.filter(t => t.status === 'ABANDONED');
         }
 
         if (filtered.length === 0) {
-            container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted);">No missions found in this category.</div>`;
+            container.innerHTML = `<div style="text-align: center; padding: 50px; color: #64748b; font-family: var(--font-mono);">NO ACTIVE MISSIONS IN THIS CATEGORY.</div>`;
             return;
         }
 
-        filtered.forEach(task => {
+        filtered.forEach(t => {
             const card = document.createElement('div');
-            card.className = `task-card ${task.status.toLowerCase()}`;
-
-            const isDone = task.status === 'COMPLETED';
-            const isAbandoned = task.status === 'ABANDONED';
+            card.className = `mission-card ${t.status.toLowerCase()}`;
+            const isDone = t.status === 'COMPLETED';
+            const isAbandoned = t.status === 'ABANDONED';
 
             card.innerHTML = `
-                <div class="task-left">
-                    <button class="btn-check" onclick="toggleComplete('${task.id}')" ${isDone || isAbandoned ? 'disabled' : ''}>
+                <div class="mission-content-left">
+                    <button class="conquer-checkbox" onclick="conquerMission('${t.id}')" ${isDone || isAbandoned ? 'disabled' : ''}>
                         ${isDone ? '✓' : ''}
                     </button>
-                    <div class="task-info">
-                        <div class="task-title">${task.title}</div>
-                        <div class="task-meta">
-                            <span class="badge-domain">${task.domain}</span>
-                            <span class="badge-priority priority-${task.priority}">${task.priority}</span>
-                            <span class="badge-xp">+${task.xp_value} XP</span>
-                            ${task.abandon_reason ? `<span style="color:#ef4444;">Reason: ${task.abandon_reason}</span>` : ''}
+                    <div>
+                        <div class="mission-title">${t.title}</div>
+                        <div class="mission-badges">
+                            <span class="badge-pill badge-domain">${t.domain}</span>
+                            <span class="badge-pill" style="background: rgba(245,158,11,0.15); color: var(--gold-core);">+${t.xp_value} XP</span>
+                            <span class="badge-pill" style="background: rgba(255,255,255,0.06); color: #94a3b8;">${t.priority}</span>
+                            ${t.abandon_reason ? `<span style="color: var(--crimson-core); font-weight: bold;">[ABANDONED: ${t.abandon_reason}]</span>` : ''}
                         </div>
                     </div>
                 </div>
                 <div>
                     ${!isDone && !isAbandoned ? `
-                        <button class="btn-abandon" onclick="promptAbandon('${task.id}')">ABANDON</button>
+                        <button class="btn-abandon" onclick="abandonMissionPrompt('${t.id}')">ABANDON</button>
                     ` : ''}
                 </div>
             `;
@@ -475,64 +1480,248 @@
         });
     }
 
-    async function submitTask() {
-        const titleInput = document.getElementById('taskInput');
-        const domainSelect = document.getElementById('domainSelect');
-        const prioritySelect = document.getElementById('prioritySelect');
-        const xpInput = document.getElementById('xpInput');
-
-        const title = titleInput.value.trim();
-        if (!title) return;
-
-        const payload = {
-            title: title,
-            domain: domainSelect.value,
-            priority: prioritySelect.value,
-            xp_value: xpInput.value ? parseInt(xpInput.value) : null
-        };
-
-        const res = await fetch('/api/tasks', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-            titleInput.value = '';
-            xpInput.value = '';
-            await loadData();
-        }
-    }
-
-    async function toggleComplete(taskId) {
+    async function conquerMission(taskId) {
+        playLevelUp();
         const res = await fetch(`/api/tasks/${taskId}/complete`, { method: 'POST' });
         if (res.ok) {
-            await loadData();
+            await loadAllSystemData();
         }
     }
 
-    async function promptAbandon(taskId) {
-        const reason = prompt("Enter reason for abandoning this mission (feeds into your Grit diagnostic ledger):");
-        if (reason === null) return; // User cancelled prompt
+    async function abandonMissionPrompt(taskId) {
+        playAlert();
+        const reason = prompt("Enter diagnostic reason for abandoning this mission (feeds into your Grit ledger):");
+        if (reason === null) return;
 
         const res = await fetch(`/api/tasks/${taskId}/abandon`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ reason: reason || "Deprioritized" })
+            body: JSON.stringify({ reason: reason || "Pivoted to Higher Leverage Target" })
         });
-
         if (res.ok) {
-            await loadData();
+            await loadAllSystemData();
         }
     }
 
-    // Enter key submit listener
-    document.getElementById('taskInput').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') submitTask();
-    });
+    function filterMissions(filter, btn) {
+        currentMissionFilter = filter;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        playBlip(750);
+        renderMissions();
+    }
 
-    // Auto-refresh every 10 seconds or on initial load
-    loadData();
+    // --- 4. COGNITIVE VERIFICATION ENGINE ---
+    async function loadQuizData() {
+        try {
+            const res = await fetch('/api/quizzes');
+            const data = await res.json();
+            quizCards = data.cards || [];
+            currentQuizIndex = 0;
+            displayCurrentQuiz();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    function displayCurrentQuiz() {
+        if (!quizCards || quizCards.length === 0) return;
+        const q = quizCards[currentQuizIndex];
+        document.getElementById('quizCounterPill').textContent = `CHALLENGE ${currentQuizIndex + 1} / ${quizCards.length}`;
+        document.getElementById('quizQuestionText').textContent = q.question;
+
+        const optsContainer = document.getElementById('quizOptionsContainer');
+        optsContainer.innerHTML = '';
+        document.getElementById('quizFeedbackBox').style.display = 'none';
+
+        const letters = ['A', 'B', 'C', 'D'];
+        q.options.forEach((optText, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-opt-btn';
+            btn.onclick = () => submitQuizAnswer(q.id, idx, btn);
+            btn.innerHTML = `
+                <div class="quiz-opt-letter">${letters[idx]}</div>
+                <div>${optText}</div>
+            `;
+            optsContainer.appendChild(btn);
+        });
+    }
+
+    async function submitQuizAnswer(quizId, selectedIdx, btnElement) {
+        const res = await fetch(`/api/quizzes/${quizId}/submit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ selected_option_index: selectedIdx })
+        });
+        const result = await res.json();
+
+        // Highlight correct/incorrect
+        const allBtns = document.querySelectorAll('.quiz-opt-btn');
+        allBtns.forEach((b, i) => {
+            b.disabled = true;
+            if (i === result.correct_index) b.classList.add('correct');
+        });
+
+        if (result.is_correct) {
+            btnElement.classList.add('correct');
+            playLevelUp();
+            document.getElementById('feedbackResultTitle').innerHTML = 
+                `<span style="color: var(--emerald-core);">✓ RETENTION VERIFIED (+${result.xp_awarded} XP)</span>`;
+        } else {
+            btnElement.classList.add('wrong');
+            playAlert();
+            document.getElementById('feedbackResultTitle').innerHTML = 
+                `<span style="color: var(--crimson-core);">✗ RETENTION DECAY DETECTED</span>`;
+        }
+
+        document.getElementById('feedbackExplanationText').innerHTML = `
+            ${result.explanation}<br><br>
+            <strong>SM-2 Interval:</strong> Next evaluation in ${result.next_due_days} day(s) | <strong>Retention Stability:</strong> ${(result.retention_probability * 100).toFixed(0)}%
+        `;
+        document.getElementById('quizFeedbackBox').style.display = 'block';
+
+        // Reload state
+        loadAllSystemData();
+    }
+
+    function loadNextQuiz() {
+        currentQuizIndex = (currentQuizIndex + 1) % quizCards.length;
+        playBlip(800);
+        displayCurrentQuiz();
+    }
+
+    // --- 5. JOURNAL & REFLECTIONS ---
+    async function loadJournalData() {
+        try {
+            const res = await fetch('/api/journal');
+            const data = await res.json();
+
+            // Render Conquered & Abandoned
+            const feed = document.getElementById('missionLedgerFeed');
+            feed.innerHTML = '';
+            const allLogs = [
+                ...(data.conquered_missions || []).map(m => ({ ...m, type: 'CONQUERED' })),
+                ...(data.abandoned_missions || []).map(m => ({ ...m, type: 'ABANDONED' }))
+            ].sort((a, b) => new Date(b.completed_at || b.abandoned_at) - new Date(a.completed_at || a.abandoned_at));
+
+            if (allLogs.length === 0) {
+                feed.innerHTML = `<div style="color: #64748b; font-size: 13px;">No missions recorded in journal yet.</div>`;
+            } else {
+                allLogs.forEach(entry => {
+                    const item = document.createElement('div');
+                    item.className = 'journal-entry';
+                    const isConquered = entry.type === 'CONQUERED';
+                    item.style.borderLeft = isConquered ? '3px solid var(--emerald-core)' : '3px solid var(--crimson-core)';
+                    item.innerHTML = `
+                        <div class="journal-timestamp">${entry.completed_at || entry.abandoned_at}</div>
+                        <div style="font-weight: 700; color: #fff;">
+                            ${isConquered ? '✓ CONQUERED' : '✗ ABANDONED'}: ${entry.title}
+                        </div>
+                        <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">
+                            ${isConquered ? `Earned +${entry.xp_earned} XP in ${entry.domain}` : `Reason: ${entry.reason}`}
+                        </div>
+                    `;
+                    feed.appendChild(item);
+                });
+            }
+
+            // Render Daily Reflections
+            const refFeed = document.getElementById('reflectionsFeed');
+            refFeed.innerHTML = '';
+            const refs = (data.daily_reflections || []).reverse();
+            if (refs.length === 0) {
+                refFeed.innerHTML = `<div style="color: #64748b; font-size: 13px;">No reflections recorded. Log your first insight above.</div>`;
+            } else {
+                refs.forEach(r => {
+                    const rItem = document.createElement('div');
+                    rItem.className = 'journal-entry';
+                    rItem.style.borderLeft = '3px solid var(--cyan-core)';
+                    rItem.innerHTML = `
+                        <div class="journal-timestamp">${r.timestamp}</div>
+                        <div style="color: #e2e8f0; line-height: 1.5;">${r.content}</div>
+                    `;
+                    refFeed.appendChild(rItem);
+                });
+            }
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function submitReflection() {
+        const textInput = document.getElementById('reflectionInput');
+        const content = textInput.value.trim();
+        if (!content) return;
+
+        playBlip(1000);
+        const res = await fetch('/api/journal/reflection', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: content })
+        });
+        if (res.ok) {
+            textInput.value = '';
+            loadJournalData();
+        }
+    }
+
+    // --- 6. NAVIGATION & MODALS ---
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+        playBlip(750);
+
+        if (tabId === 'avatarTab') {
+            setTimeout(onWindowResize, 50);
+        }
+    }
+
+    function openDeployModal() {
+        document.getElementById('deployModal').classList.add('open');
+        playBlip(850);
+    }
+
+    function closeDeployModal() {
+        document.getElementById('deployModal').classList.remove('open');
+        playBlip(600);
+    }
+
+    async function submitModalTask() {
+        const title = document.getElementById('modalTaskTitle').value.trim();
+        const domain = document.getElementById('modalTaskDomain').value;
+        const priority = document.getElementById('modalTaskPriority').value;
+        const xp = document.getElementById('modalTaskXP').value;
+
+        if (!title) return;
+
+        playBlip(950);
+        const res = await fetch('/api/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title: title,
+                domain: domain,
+                priority: priority,
+                xp_value: xp ? parseInt(xp) : null
+            })
+        });
+
+        if (res.ok) {
+            document.getElementById('modalTaskTitle').value = '';
+            document.getElementById('modalTaskXP').value = '';
+            closeDeployModal();
+            loadAllSystemData();
+        }
+    }
+
+    // Initialize Everything on Window Load
+    window.addEventListener('DOMContentLoaded', () => {
+        initThreeAvatar();
+        loadAllSystemData();
+    });
 </script>
 
 </body>

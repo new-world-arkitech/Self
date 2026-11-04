@@ -1,0 +1,112 @@
+[
+  {
+    "id": "quiz_botanical_01",
+    "domain": "Self.knowledge",
+    "source_doc": "BOTANICAL_SURVIVAL_AND_MEDICINE_GUIDE.md",
+    "title": "Universal Plant Toxicity Identification",
+    "question": "Which physical characteristic is a universal red flag that indicates a wild plant should NOT be consumed?",
+    "options": [
+      "Milky or cloudy latex sap (natural alkaloids/latex)",
+      "Deep green serrated leaf edges",
+      "Fibrous shallow root system",
+      "Flowering in early spring"
+    ],
+    "correct_index": 0,
+    "explanation": "Milky or cloudy sap almost universally indicates toxic alkaloids (e.g. spurges, dogbanes). Umbrella-shaped flowers and almond scents are other lethal indicators.",
+    "xp_value": 45,
+    "state": "UNTESTED",
+    "repetitions": 0,
+    "ease_factor": 2.5,
+    "interval_days": 1,
+    "next_due": null,
+    "last_reviewed": null
+  },
+  {
+    "id": "quiz_botanical_02",
+    "domain": "Self.knowledge",
+    "source_doc": "BOTANICAL_SURVIVAL_AND_MEDICINE_GUIDE.md",
+    "title": "Soil Composting Ratios",
+    "question": "What is the scientifically recommended carbon-to-nitrogen volumetric ratio for thermal composting?",
+    "options": [
+      "1 part Browns (dry leaves) to 1 part Greens (nitrogen)",
+      "3 parts Browns (carbon) to 1 part Greens (nitrogen)",
+      "5 parts Greens to 1 part Browns",
+      "100% kitchen food scraps with no carbon"
+    ],
+    "correct_index": 1,
+    "explanation": "3 parts Browns to 1 part Greens creates the optimal 30:1 C:N ratio for rapid aerobic microbial decomposition without putrefaction.",
+    "xp_value": 40,
+    "state": "UNTESTED",
+    "repetitions": 0,
+    "ease_factor": 2.5,
+    "interval_days": 1,
+    "next_due": null,
+    "last_reviewed": null
+  },
+  {
+    "id": "quiz_temple_01",
+    "domain": "Self.temple",
+    "source_doc": "90_day_evolution_plan.md",
+    "title": "Pillar 2: Morning Ritual Anchors",
+    "question": "According to the 90-Day Self-Evolution Plan, what are the first non-negotiable actions upon waking?",
+    "options": [
+      "Immediately hydrate with 500ml water and avoid social media / email",
+      "Check client emails and social media in bed",
+      "Eat a heavy breakfast within 10 minutes",
+      "Open trading terminal immediately"
+    ],
+    "correct_index": 0,
+    "explanation": "Hydrating with 500ml water and keeping phone/social inputs offline preserves dopamine baseline and mental clarity for the 90-minute Deep Work block.",
+    "xp_value": 50,
+    "state": "UNTESTED",
+    "repetitions": 0,
+    "ease_factor": 2.5,
+    "interval_days": 1,
+    "next_due": null,
+    "last_reviewed": null
+  },
+  {
+    "id": "quiz_temple_02",
+    "domain": "Self.temple",
+    "source_doc": "90_day_evolution_plan.md",
+    "title": "Pillar 2: Evening Digital Sunset",
+    "question": "What is the scheduled cutoff time for digital screens to optimize melatonin release?",
+    "options": [
+      "9:30 PM (Digital Sunset with warm lighting)",
+      "11:45 PM right before sleep",
+      "No screen curfew is necessary",
+      "8:00 AM"
+    ],
+    "correct_index": 0,
+    "explanation": "Digital Sunset at 9:30 PM allows natural melatonin cascade, preparation of the top 3 next-day objectives, and a 10:00 PM sleep target.",
+    "xp_value": 40,
+    "state": "UNTESTED",
+    "repetitions": 0,
+    "ease_factor": 2.5,
+    "interval_days": 1,
+    "next_due": null,
+    "last_reviewed": null
+  },
+  {
+    "id": "quiz_survival_01",
+    "domain": "Self.knowledge",
+    "source_doc": "PRACTICAL_SURVIVAL_SCIENCE_AND_PHYSICAL_MASTERY_GUIDE.md",
+    "title": "Thermal Layering Physics",
+    "question": "Why is cotton strictly avoided in cold/wet survival environments (The 'Cotton Kills' principle)?",
+    "options": [
+      "Cotton fibers hold 27x their weight in water and lose 100% of insulating value when wet",
+      "Cotton is too heavy to carry in a rucksack",
+      "Cotton catches fire from ambient static electricity",
+      "Cotton restricts shoulder mobility in shelter building"
+    ],
+    "correct_index": 0,
+    "explanation": "Cotton absorbs moisture readily and conducts body heat away up to 25x faster when damp, inducing rapid hypothermia. Wool and synthetic polyesters preserve loft.",
+    "xp_value": 50,
+    "state": "UNTESTED",
+    "repetitions": 0,
+    "ease_factor": 2.5,
+    "interval_days": 1,
+    "next_due": null,
+    "last_reviewed": null
+  }
+]

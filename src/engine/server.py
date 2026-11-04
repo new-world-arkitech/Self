@@ -1,11 +1,14 @@
 # Self/src/engine/server.py
 import sys
+import json
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
+from datetime import datetime, timezone
 
 # UTF-8 on Windows
 if sys.platform == "win32":
@@ -14,7 +17,7 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-from config import APP_PORT, APP_HOST, STATE_MATRIX_FILE, JOURNAL_LEDGER_FILE
+from config import APP_PORT, APP_HOST, STATE_MATRIX_FILE, JOURNAL_LEDGER_FILE, ROOT_DIR
 from task_manager import (
     load_tasks,
     add_task,
@@ -23,9 +26,33 @@ from task_manager import (
     list_tasks,
     get_task_stats
 )
+from verification_engine import (
+    load_verification_cards,
+    get_due_quizzes,
+    submit_quiz_answer,
+    get_cognitive_retention_summary
+)
+from psychometrics import compute_psychometrics
 
-app = FastAPI(title="SELF. // Mission & Evolution Server")
+app = FastAPI(title="SELF. // Sovereign Life OS & Avatar Evolution Engine")
 
+# CORS middleware for local development flexibility
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Mount public directory for 3D models (.glb, .stl) and textures
+public_dir = ROOT_DIR / "public"
+public_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/public", StaticFiles(directory=str(public_dir)), name="public")
+
+# ------------------------------------------------------------------------------
+# Request Models
+# ------------------------------------------------------------------------------
 class TaskCreateRequest(BaseModel):
     title: str
     domain: str = "Self.knowledge"
@@ -37,9 +64,23 @@ class TaskCreateRequest(BaseModel):
 class TaskAbandonRequest(BaseModel):
     reason: str = "Deprioritized / Pivoted"
 
+class QuizSubmitRequest(BaseModel):
+    selected_option_index: int
+
+class ReflectionCreateRequest(BaseModel):
+    content: str
+    focus_domain: Optional[str] = "Self.knowledge"
+
+# ------------------------------------------------------------------------------
+# API Endpoints
+# ------------------------------------------------------------------------------
+
 @app.get("/api/tasks")
 def get_all_tasks(status: Optional[str] = None, domain: Optional[str] = None):
-    return {"tasks": list_tasks(status=status, domain=domain), "stats": get_task_stats()}
+    return {
+        "tasks": list_tasks(status=status, domain=domain),
+        "stats": get_task_stats()
+    }
 
 @app.post("/api/tasks")
 def create_new_task(req: TaskCreateRequest):
@@ -67,9 +108,29 @@ def abandon_existing_task(task_id: str, req: TaskAbandonRequest):
         raise HTTPException(status_code=404, detail="Task not found")
     return {"success": True, "task": task, "stats": get_task_stats()}
 
+@app.get("/api/quizzes")
+def get_quizzes(domain: Optional[str] = None):
+    all_cards = load_verification_cards()
+    due_cards = get_due_quizzes(domain=domain)
+    return {
+        "cards": all_cards,
+        "due_count": len(due_cards),
+        "summary": get_cognitive_retention_summary()
+    }
+
+@app.post("/api/quizzes/{quiz_id}/submit")
+def submit_quiz(quiz_id: str, req: QuizSubmitRequest):
+    result = submit_quiz_answer(quiz_id, req.selected_option_index)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
+
+@app.get("/api/psychometrics")
+def get_psychometrics():
+    return compute_psychometrics()
+
 @app.get("/api/state")
 def get_state():
-    import json
     if STATE_MATRIX_FILE.exists():
         with open(STATE_MATRIX_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -77,11 +138,34 @@ def get_state():
 
 @app.get("/api/journal")
 def get_journal():
-    import json
     if JOURNAL_LEDGER_FILE.exists():
         with open(JOURNAL_LEDGER_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    return {"conquered_missions": [], "abandoned_missions": []}
+    return {"conquered_missions": [], "abandoned_missions": [], "daily_reflections": []}
+
+@app.post("/api/journal/reflection")
+def add_journal_reflection(req: ReflectionCreateRequest):
+    ledger = {"conquered_missions": [], "abandoned_missions": [], "daily_reflections": []}
+    if JOURNAL_LEDGER_FILE.exists():
+        try:
+            with open(JOURNAL_LEDGER_FILE, "r", encoding="utf-8") as f:
+                ledger = json.load(f)
+        except Exception:
+            pass
+
+    now = datetime.now(timezone.utc).isoformat()
+    entry = {
+        "id": f"ref_{datetime.now().strftime('%Y%m%d%H%M%S')}",
+        "timestamp": now,
+        "domain": req.focus_domain,
+        "content": req.content.strip()
+    }
+    ledger.setdefault("daily_reflections", []).append(entry)
+
+    with open(JOURNAL_LEDGER_FILE, "w", encoding="utf-8") as f:
+        json.dump(ledger, f, indent=2)
+
+    return {"success": True, "entry": entry}
 
 @app.get("/", response_class=HTMLResponse)
 def get_tasklist_dashboard():
@@ -93,5 +177,5 @@ def get_tasklist_dashboard():
 
 if __name__ == "__main__":
     import uvicorn
-    print(f"[*] Starting SELF. Mission Server on http://{APP_HOST}:{APP_PORT}")
+    print(f"[*] Starting SELF. AAA Sovereign Server on http://{APP_HOST}:{APP_PORT}")
     uvicorn.run(app, host=APP_HOST, port=APP_PORT)
