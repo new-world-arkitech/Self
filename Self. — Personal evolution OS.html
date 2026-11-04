@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Self. — A personal evolution OS</title>
+<meta name="description" content="Self. turns the guides and documents you already have into verified skill, shown live on a 3D avatar that changes as you do.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f5f4; --surface:#e6ecea; --ink:#0f2229; --muted:#4d636b; --line:#c5d2d0;
+  --accent:#0c7f78; --gold:#a8791a; --figure:#9fb3b3; --code:#0f2229; --codeink:#d7e6e3;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1a20; --surface:#112830; --ink:#e4eeec; --muted:#8fa8ad; --line:#21404a;
+    --accent:#5fd0c4; --gold:#e3b855; --figure:#4a666d; --code:#07131a; --codeink:#cfe3e0; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1a20; --surface:#112830; --ink:#e4eeec; --muted:#8fa8ad; --line:#21404a;
+  --accent:#5fd0c4; --gold:#e3b855; --figure:#4a666d; --code:#07131a; --codeink:#cfe3e0; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.02em;text-decoration:none}
+.logo span{color:var(--accent)}
+.gh{font-size:15px;text-decoration:none;border:1px solid var(--line);padding:8px 16px;border-radius:999px}
+.gh:hover{border-color:var(--accent)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:40px 0 80px}
+h1{font-size:clamp(40px,6.4vw,76px);line-height:1;letter-spacing:-.035em;font-weight:800;margin:0 0 22px}
+.lead{font-size:20px;color:var(--muted);max-width:30em;margin:0 0 30px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stage{background:var(--surface);border-radius:28px;padding:22px 22px 18px}
+.stage svg{width:100%;height:auto;max-height:420px;display:block}
+.ctrls{display:grid;gap:10px;margin-top:6px}
+.ctrl{display:grid;grid-template-columns:96px 1fr 70px;gap:12px;align-items:center;font-size:14px}
+.ctrl output{color:var(--muted);text-align:right}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.hint{font-size:13px;color:var(--muted);margin:12px 0 0}
+section{padding:72px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(28px,4vw,42px);letter-spacing:-.025em;line-height:1.1;margin:0 0 14px;font-weight:800}
+.sub{color:var(--muted);max-width:36em;margin:0 0 40px}
+.loop{display:grid;grid-template-columns:repeat(5,1fr);gap:0;counter-reset:s;list-style:none;padding:0;margin:0}
+.loop li{padding:0 18px 0 0;position:relative;counter-increment:s}
+.loop li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:600;font-size:15px;margin-bottom:14px}
+.loop li:not(:last-child)::after{content:"";position:absolute;top:17px;left:42px;right:8px;height:1px;background:var(--line)}
+.loop b{display:block;font-size:19px;margin-bottom:4px}
+.loop span{color:var(--muted);font-size:15px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+th,td{text-align:left;padding:16px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:14px}
+td:first-child{font-weight:800;font-size:17px;white-space:nowrap}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+pre{background:var(--code);color:var(--codeink);border-radius:16px;padding:18px 20px;overflow-x:auto;font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:0 0 14px}
+.step{font-weight:600;margin:22px 0 8px}
+.step:first-child{margin-top:0}
+.priv{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.priv p{margin:0;color:var(--muted)}
+.priv h3{margin:0 0 8px;font-size:21px}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:15px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:32px;padding-top:16px}
+  .loop{grid-template-columns:1fr;gap:22px}
+  .loop li{padding:0 0 0 52px}
+  .loop li::before{position:absolute;left:0;top:0;margin:0}
+  .loop li:not(:last-child)::after{display:none}
+  .cols,.priv{grid-template-columns:1fr}
+  .ctrl{grid-template-columns:84px 1fr 64px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#">Self<span>.</span></a>
+    <a class="gh" href="https://github.com/new-world-arkitech/Self">View on GitHub</a>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Read it. Prove it. Become it.</h1>
+      <p class="lead">Self. turns the guides, protocols and documents you already own into verified skill, and shows your progress on a 3D avatar that changes as you do.</p>
+      <div class="cta">
+        <a class="btn" href="#start">Get started</a>
+        <a class="btn alt" href="#domains">See the five domains</a>
+      </div>
+    </div>
+    <div class="stage">
+      <svg viewBox="0 0 240 400" role="img" aria-label="Avatar that changes as the sliders below are raised">
+        <defs>
+          <radialGradient id="aura"><stop offset="0" stop-color="var(--gold)" stop-opacity=".9"/><stop offset="1" stop-color="var(--gold)" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle id="aura-c" cx="120" cy="210" r="150" fill="url(#aura)" opacity="0"/>
+        <g id="runes" opacity="0" fill="none" stroke="var(--accent)" stroke-width="1.5">
+          <ellipse cx="120" cy="362" rx="86" ry="16" stroke-dasharray="3 7"/>
+          <ellipse cx="120" cy="362" rx="58" ry="10"/>
+        </g>
+        <ellipse id="shadow" cx="120" cy="362" rx="38" ry="6" fill="var(--ink)" opacity=".18"/>
+        <g id="fig">
+          <g fill="var(--figure)">
+            <rect x="96" y="212" width="19" height="142" rx="9"/>
+            <rect x="125" y="212" width="19" height="142" rx="9"/>
+          </g>
+          <g id="legarmor" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" opacity="0">
+            <path d="M98 290h15M98 304h15M127 290h15M127 304h15"/>
+          </g>
+          <g id="upper">
+            <path d="M90 112Q120 98 150 112L143 218H97Z" fill="var(--figure)"/>
+            <path d="M88 122L77 204M152 122L163 204" stroke="var(--figure)" stroke-width="15" stroke-linecap="round" fill="none"/>
+            <g id="armor" opacity="0" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round">
+              <path d="M99 118Q120 110 141 118L137 172Q120 182 103 172Z"/>
+              <circle cx="88" cy="120" r="11"/><circle cx="152" cy="120" r="11"/>
+              <path d="M73 180l8 3M159 183l8-3"/>
+            </g>
+            <g id="head">
+              <rect x="113" y="92" width="14" height="14" fill="var(--figure)"/>
+              <circle cx="120" cy="78" r="21" fill="var(--figure)"/>
+              <ellipse id="halo" cx="120" cy="46" rx="28" ry="7" fill="none" stroke="var(--gold)" stroke-width="2.5" opacity="0"/>
+              <g id="glyphs" fill="var(--gold)" opacity="0"></g>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <div class="ctrls" id="ctrls"></div>
+      <p class="hint">Raise a domain and watch the matching layer appear.</p>
+    </div>
+  </div>
+
+  <section id="loop">
+    <h2>One loop, five steps</h2>
+    <p class="sub">Nothing counts until you show you can do it.</p>
+    <ol class="loop">
+      <li><b>Drop</b><span>Add a PDF, Word, Markdown or text file.</span></li>
+      <li><b>Extract</b><span>Self. pulls out concepts and milestones.</span></li>
+      <li><b>Verify</b><span>Pass a quiz or complete a real-world task.</span></li>
+      <li><b>Evolve</b><span>XP is logged and your avatar changes.</span></li>
+      <li><b>Measure</b><span>Track grit, retention and velocity over time.</span></li>
+    </ol>
+  </section>
+
+  <section id="domains">
+    <h2>Five domains, one body</h2>
+    <p class="sub">Each area of your life controls one visible layer of the avatar, from tier 1 to tier 5.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Domain</th><th>What you feed it</th><th>Avatar layer</th><th>Tier 1</th><th>Tier 5</th></tr></thead>
+        <tbody>
+          <tr><td>Knowledge</td><td>Survival guides, mental models, cognitive science, philosophy</td><td>Neural HUD, glyphs and orbital crown</td><td>Faint spark</td><td>Golden orbiting glyphs and a holographic halo</td></tr>
+          <tr><td>Career</td><td>Patents, business docs, code repos, execution blueprints</td><td>Exoskeleton armor and kinetic plates</td><td>Civilian mesh</td><td>Hardened cybernetic armor</td></tr>
+          <tr><td>Credit</td><td>Financial statements, consumer credit law, wealth vehicles</td><td>Radiance, aura and fresnel shader</td><td>Matte grey</td><td>Iridescent gold bloom</td></tr>
+          <tr><td>Temple</td><td>Training, biohacking protocols, nutrition, recovery</td><td>Base anatomy and posture</td><td>Fatigued and slouched</td><td>Aligned combat poise and levitation</td></tr>
+          <tr><td>Legal</td><td>Identity records, background reports, entity compliance</td><td>Structural rigidity and runes</td><td>Unanchored</td><td>Immovable, with a protective runic seal</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="start">
+    <h2>Run it on your machine</h2>
+    <p class="sub">You need Python 3.10+ and Node.js 18+. Everything runs locally.</p>
+    <div class="cols">
+      <div>
+        <p class="step">1. Configure</p>
+<pre>cp .env.example .env</pre>
+        <p class="step">2. Ingest your documents</p>
+<pre>python src/engine/universal_ingestor.py</pre>
+        <p class="step">3. Launch the dashboard</p>
+<pre>python src/engine/server.py
+# open http://127.0.0.1:8000</pre>
+      </div>
+      <div>
+        <p class="step">Manage missions from the command line</p>
+<pre>python src/engine/task_manager.py add \
+  "Review toxic plant red flags" \
+  Self.knowledge 50
+
+python src/engine/task_manager.py list
+python src/engine/task_manager.py complete &lt;task_id&gt;
+python src/engine/task_manager.py stats</pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="priv">
+      <div><h2>Your data stays yours</h2></div>
+      <div>
+        <h3>Local-first</h3>
+        <p>Documents, state and journal logs never leave your machine. The career, credit and legal folders, and all .env files, are gitignored so personal and financial records are never committed.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Self. is open source under the MIT License.</span>
+    <a href="https://github.com/new-world-arkitech/Self">github.com/new-world-arkitech/Self</a>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var D=[["knowledge","Knowledge"],["career","Career"],["credit","Credit"],["temple","Temple"],["legal","Legal"]];
+  var S={knowledge:1,career:1,credit:1,temple:1,legal:1};
+  var NAMES=["Novice","Apprentice","Adept","Master","Sovereign"];
+  var box=document.getElementById("ctrls");
+  var $=function(i){return document.getElementById(i)};
+  var gl=$("glyphs"), NS="http://www.w3.org/2000/svg";
+  for(var i=0;i<5;i++){
+    var a=i/5*Math.PI*2, x=120+Math.cos(a)*52, y=78+Math.sin(a)*52;
+    var p=document.createElementNS(NS,"path");
+    p.setAttribute("d","M"+x+" "+(y-6)+"l4 6l-4 6l-4-6z");
+    p.setAttribute("data-i",i);
+    gl.appendChild(p);
+  }
+  var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!reduce){
+    var an=document.createElementNS(NS,"animateTransform");
+    an.setAttribute("attributeName","transform");an.setAttribute("type","rotate");
+    an.setAttribute("from","0 120 78");an.setAttribute("to","360 120 78");
+    an.setAttribute("dur","22s");an.setAttribute("repeatCount","indefinite");
+    gl.appendChild(an);
+  }
+  D.forEach(function(d){
+    var row=document.createElement("label");row.className="ctrl";
+    row.innerHTML='<span>'+d[1]+'</span><input type="range" min="1" max="5" step="1" value="1" aria-label="'+d[1]+' tier"><output>Novice</output>';
+    var inp=row.querySelector("input"),out=row.querySelector("output");
+    inp.addEventListener("input",function(){S[d[0]]=+inp.value;out.textContent=NAMES[inp.value-1];render()});
+    box.appendChild(row);
+  });
+  function f(v){return (v-1)/4}
+  function render(){
+    var k=f(S.knowledge),c=f(S.career),cr=f(S.credit),t=f(S.temple),l=f(S.legal);
+    $("halo").setAttribute("opacity",k>0?(0.25+0.75*k).toFixed(2):0);
+    $("glyphs").setAttribute("opacity",k>=.25?1:0);
+    var n=Math.round(k*5);
+    [].forEach.call(gl.querySelectorAll("path"),function(p){p.style.opacity=(+p.getAttribute("data-i")<n)?1:0});
+    $("armor").setAttribute("opacity",c.toFixed(2));
+    $("legarmor").setAttribute("opacity",c.toFixed(2));
+    $("aura-c").setAttribute("opacity",(cr*.85).toFixed(2));
+    $("aura-c").setAttribute("r",(90+cr*70).toFixed(0));
+    var slouch=(1-t)*9;
+    $("upper").setAttribute("transform","rotate("+slouch.toFixed(1)+" 120 215)");
+    $("head").setAttribute("transform","translate(0 "+((1-t)*7).toFixed(1)+")");
+    var lift=Math.max(0,(t-.5)*2)*16;
+    $("fig").setAttribute("transform","translate(0 "+(-lift).toFixed(1)+")");
+    $("shadow").setAttribute("rx",(38-lift*.8).toFixed(0));
+    $("shadow").setAttribute("opacity",(0.18-lift*.006).toFixed(2));
+    $("runes").setAttribute("opacity",l.toFixed(2));
+  }
+  render();
+})();
+</script>
+</body>
+</html>
