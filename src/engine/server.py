@@ -3,7 +3,7 @@ import sys
 import json
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -177,6 +177,26 @@ def trigger_ai_scan_all():
         "results": results,
         "message": f"Processed {len(results)} document(s) with local AI."
     }
+
+@app.get("/models/avatar.obj")
+def get_avatar_obj():
+    for p in [
+        ROOT_DIR / "public" / "models" / "woman_avatar.obj",
+        ROOT_DIR / "src" / "avatar" / "woman_avatar.obj"
+    ]:
+        if p.exists():
+            return FileResponse(p, media_type="text/plain")
+    raise HTTPException(status_code=404, detail="Avatar OBJ not found")
+
+@app.get("/models/avatar.glb")
+def get_avatar_glb():
+    for p in [
+        ROOT_DIR / "public" / "models" / "woman_avatar.glb",
+        ROOT_DIR / "src" / "avatar" / "avatar.glb"
+    ]:
+        if p.exists():
+            return FileResponse(p, media_type="model/gltf-binary")
+    raise HTTPException(status_code=404, detail="Avatar GLB not found")
 
 @app.get("/", response_class=HTMLResponse)
 def get_tasklist_dashboard():

@@ -932,13 +932,15 @@
                 <div id="threeCanvasContainer"></div>
 
                 <div class="canvas-overlay-telemetry" id="avatarTelemetryOverlay">
-                    AVATAR MODEL: 3D HUMANOID RIG (woman_avatar.glb)<br>
+                    AVATAR MODEL: 3D MANNEQUIN OBJ (woman_avatar.obj)<br>
                     NEURAL GLYPHS: ORBITING // TIER 3 RESONANCE<br>
                     AURA SHADER: FRESNEL EMERALD (TIER 2)
                 </div>
 
                 <div class="canvas-controls-dock">
-                    <button class="mini-btn active" id="btnModelToggle" onclick="toggleAvatarModel()">MODEL: HUMANOID</button>
+                    <button class="mini-btn active" id="btnModelToggle" onclick="toggleAvatarModel()">MODEL: 3D OBJ</button>
+                    <button class="mini-btn" onclick="document.getElementById('objFileInput').click()">📁 LOAD .OBJ</button>
+                    <input type="file" id="objFileInput" accept=".obj" style="display:none;" onchange="handleObjFileSelect(event)">
                     <button class="mini-btn active" id="btnAutoSpin" onclick="toggleAutoSpin()">AUTO-SPIN: ON</button>
                     <button class="mini-btn" id="btnWireframe" onclick="toggleWireframe()">WIREFRAME</button>
                     <button class="mini-btn" onclick="resetCamera()">RESET VIEW</button>
@@ -1256,6 +1258,7 @@
 
         // Load or build meshes
         buildAvatarEntities();
+        setupCanvasDragAndDrop();
 
         window.addEventListener('resize', onWindowResize);
         animateThree();
@@ -1363,52 +1366,159 @@
 
     function loadHumanoidMesh(auraHex) {
         humanoidRoot = new THREE.Group();
-        humanoidRoot.position.set(0, -0.9, 0);
+        scene.add(humanoidRoot);
 
-        const loader = new THREE.GLTFLoader();
-        loader.load(
-            '/public/models/woman_avatar.glb',
-            function (gltf) {
-                const model = gltf.scene;
-                const avatarMat = new THREE.MeshStandardMaterial({
-                    color: 0x08101e,
-                    metalness: 0.85,
-                    roughness: 0.25,
-                    emissive: auraHex,
-                    emissiveIntensity: 0.2,
-                    wireframe: wireframeMode
-                });
+        const avatarMat = new THREE.MeshStandardMaterial({
+            color: 0x0a1220,
+            metalness: 0.85,
+            roughness: 0.22,
+            emissive: auraHex,
+            emissiveIntensity: 0.25,
+            wireframe: wireframeMode,
+            side: THREE.DoubleSide
+        });
 
-                model.traverse(function (child) {
+        const objLoader = new THREE.OBJLoader();
+        
+        // Primary: Load the exact woman_avatar.obj file
+        objLoader.load(
+            '/models/avatar.obj',
+            function (obj) {
+                console.log("[✓] 3D OBJ Avatar (woman_avatar.obj) loaded successfully!");
+                obj.traverse(function (child) {
                     if (child.isMesh) {
+                        // CRITICAL: Compute normals for smooth cybernetic lighting
+                        child.geometry.computeVertexNormals();
+                        child.geometry.center();
                         child.material = avatarMat;
                         child.castShadow = true;
+                        child.receiveShadow = true;
                     }
                 });
 
-                humanoidRoot.add(model);
+                // Center avatar perfectly at origin above holographic ground
+                obj.position.set(0, 0, 0);
+                humanoidRoot.add(obj);
+                showToast("✓ 3D Avatar OBJ Loaded: woman_avatar.obj");
             },
-            undefined,
+            function (xhr) {
+                if (xhr.lengthComputable) {
+                    const pct = Math.round((xhr.loaded / xhr.total) * 100);
+                    const overlay = document.getElementById('avatarTelemetryOverlay');
+                    if (overlay) overlay.innerHTML = `LOADING 3D OBJ: ${pct}%...<br>SOURCE: woman_avatar.obj`;
+                }
+            },
             function (err) {
-                console.warn("GLB load failed, trying OBJLoader...", err);
-                const objLoader = new THREE.OBJLoader();
-                objLoader.load('/public/models/woman_avatar.obj', function (obj) {
-                    const avatarMat = new THREE.MeshStandardMaterial({
-                        color: 0x08101e,
-                        metalness: 0.85,
-                        roughness: 0.25,
-                        emissive: auraHex,
-                        emissiveIntensity: 0.2,
-                        wireframe: wireframeMode
+                console.warn("[!] /models/avatar.obj load failed, trying /public/models fallback...", err);
+                // Fallback to /public/models/woman_avatar.obj or GLB
+                objLoader.load('/public/models/woman_avatar.obj', function (fallbackObj) {
+                    fallbackObj.traverse(function (c) {
+                        if (c.isMesh) {
+                            c.geometry.computeVertexNormals();
+                            c.geometry.center();
+                            c.material = avatarMat;
+                        }
                     });
-                    obj.traverse(function (c) {
-                        if (c.isMesh) c.material = avatarMat;
+                    humanoidRoot.add(fallbackObj);
+                }, undefined, function (fallbackErr) {
+                    console.warn("[!] OBJ fallback failed, loading GLB...", fallbackErr);
+                    const gltfLoader = new THREE.GLTFLoader();
+                    gltfLoader.load('/models/avatar.glb', function (gltf) {
+                        const model = gltf.scene;
+                        model.traverse(function (c) {
+                            if (c.isMesh) {
+                                c.geometry.computeVertexNormals();
+                                c.geometry.center();
+                                c.material = avatarMat;
+                            }
+                        });
+                        humanoidRoot.add(model);
                     });
-                    humanoidRoot.add(obj);
                 });
             }
         );
-        scene.add(humanoidRoot);
+    }
+
+    // Direct OBJ File Selection & Drag-and-Drop Loader
+    function handleObjFileSelect(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        loadObjFromFile(file);
+    }
+
+    function loadObjFromFile(file) {
+        showToast(`Loading custom 3D model: ${file.name}...`);
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const contents = event.target.result;
+            const objLoader = new THREE.OBJLoader();
+            try {
+                const customObj = objLoader.parse(contents);
+                const auraHex = getAuraColor();
+                const avatarMat = new THREE.MeshStandardMaterial({
+                    color: 0x0a1220,
+                    metalness: 0.85,
+                    roughness: 0.22,
+                    emissive: auraHex,
+                    emissiveIntensity: 0.25,
+                    wireframe: wireframeMode,
+                    side: THREE.DoubleSide
+                });
+
+                if (humanoidRoot) scene.remove(humanoidRoot);
+                humanoidRoot = new THREE.Group();
+                scene.add(humanoidRoot);
+
+                customObj.traverse(function (child) {
+                    if (child.isMesh) {
+                        child.geometry.computeVertexNormals();
+                        child.geometry.center();
+                        child.material = avatarMat;
+                    }
+                });
+
+                customObj.position.set(0, 0, 0);
+                humanoidRoot.add(customObj);
+                playLevelUp();
+                showToast(`✓ Mounted ${file.name} to Avatar Rig!`);
+
+                document.getElementById('avatarTelemetryOverlay').innerHTML = 
+                    `AVATAR: CUSTOM 3D OBJ (${file.name})<br>STATUS: ACTIVE // NORMALS COMPUTED<br>AURA SHADER: FRESNEL ACTIVE`;
+            } catch (err) {
+                console.error("Error parsing OBJ:", err);
+                showToast("Failed to parse .OBJ file.");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    // Setup Drag-and-Drop on Three Canvas
+    function setupCanvasDragAndDrop() {
+        const container = document.getElementById('threeCanvasContainer');
+        if (!container) return;
+
+        container.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            container.style.boxShadow = "inset 0 0 40px var(--cyan-core)";
+        });
+
+        container.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            container.style.boxShadow = "none";
+        });
+
+        container.addEventListener('drop', (e) => {
+            e.preventDefault();
+            container.style.boxShadow = "none";
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                if (file.name.toLowerCase().endsWith('.obj')) {
+                    loadObjFromFile(file);
+                } else {
+                    showToast("Please drop an .OBJ 3D file.");
+                }
+            }
+        });
     }
 
     function loadProceduralCore(auraHex) {
